@@ -1,0 +1,102 @@
+////////////////////////////////////////////////////////////////////////////////
+// Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+////////////////////////////////////////////////////////////////////////////////
+//   ____  ____ 
+//  /   /\/   / 
+// /___/  \  /    Vendor: Xilinx 
+// \   \   \/     Version : 14.7
+//  \   \         Application : sch2hdl
+//  /   /         Filename : compliment_2s4.vf
+// /___/   /\     Timestamp : 11/24/2021 15:00:42
+// \   \  /  \ 
+//  \___\/\___\ 
+//
+//Command: sch2hdl -intstyle ise -family artix7 -verilog /home/dell-pc/Documents/pinE/signCalculator/compliment_2s4.vf -w /home/dell-pc/Documents/pinE/signCalculator/compliment_2s4.sch
+//Design Name: compliment_2s4
+//Device: artix7
+//Purpose:
+//    This verilog netlist is translated from an ECS schematic.It can be 
+//    synthesized and simulated, but it should not be modified. 
+//
+`timescale 1ns / 1ps
+
+module half_adder_MUSER_compliment_2s4(a, 
+                                       b, 
+                                       RST, 
+                                       carry, 
+                                       sum);
+
+    input a;
+    input b;
+    input RST;
+   output carry;
+   output sum;
+   
+   wire XLXN_2;
+   wire XLXN_9;
+   wire XLXN_10;
+   
+   AND2  XLXI_1 (.I0(b), 
+                .I1(a), 
+                .O(XLXN_9));
+   XOR2  XLXI_2 (.I0(b), 
+                .I1(a), 
+                .O(XLXN_10));
+   AND2  XLXI_3 (.I0(XLXN_2), 
+                .I1(XLXN_9), 
+                .O(carry));
+   AND2  XLXI_4 (.I0(XLXN_2), 
+                .I1(XLXN_10), 
+                .O(sum));
+   INV  XLXI_5 (.I(RST), 
+               .O(XLXN_2));
+endmodule
+`timescale 1ns / 1ps
+
+module compliment_2s4(A, 
+                      RST, 
+                      Y);
+
+    input [3:0] A;
+    input RST;
+   output [3:0] Y;
+   
+   wire XLXN_2;
+   wire XLXN_3;
+   wire XLXN_4;
+   wire XLXN_7;
+   wire XLXN_8;
+   wire XLXN_41;
+   wire XLXN_51;
+   wire XLXN_105;
+   
+   INV  XLXI_5 (.I(A[3]), 
+               .O(XLXN_41));
+   INV  XLXI_6 (.I(A[2]), 
+               .O(XLXN_4));
+   INV  XLXI_7 (.I(A[1]), 
+               .O(XLXN_3));
+   INV  XLXI_8 (.I(A[0]), 
+               .O(XLXN_2));
+   half_adder_MUSER_compliment_2s4  XLXI_12 (.a(XLXN_4), 
+                                            .b(XLXN_7), 
+                                            .RST(RST), 
+                                            .carry(XLXN_105), 
+                                            .sum(Y[2]));
+   half_adder_MUSER_compliment_2s4  XLXI_13 (.a(XLXN_8), 
+                                            .b(XLXN_3), 
+                                            .RST(RST), 
+                                            .carry(XLXN_7), 
+                                            .sum(Y[1]));
+   half_adder_MUSER_compliment_2s4  XLXI_14 (.a(XLXN_51), 
+                                            .b(XLXN_2), 
+                                            .RST(RST), 
+                                            .carry(XLXN_8), 
+                                            .sum(Y[0]));
+   half_adder_MUSER_compliment_2s4  XLXI_18 (.a(XLXN_41), 
+                                            .b(XLXN_105), 
+                                            .RST(RST), 
+                                            .carry(), 
+                                            .sum(Y[3]));
+   VCC  XLXI_24 (.P(XLXN_51));
+endmodule

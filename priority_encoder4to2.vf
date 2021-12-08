@@ -1,0 +1,74 @@
+////////////////////////////////////////////////////////////////////////////////
+// Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+////////////////////////////////////////////////////////////////////////////////
+//   ____  ____ 
+//  /   /\/   / 
+// /___/  \  /    Vendor: Xilinx 
+// \   \   \/     Version : 14.7
+//  \   \         Application : sch2hdl
+//  /   /         Filename : priority_encoder4to2.vf
+// /___/   /\     Timestamp : 11/17/2021 16:18:39
+// \   \  /  \ 
+//  \___\/\___\ 
+//
+//Command: sch2hdl -intstyle ise -family artix7 -verilog /home/dell-pc/Music/test2/priority_encoder4to2.vf -w /home/dell-pc/Music/test2/priority_encoder4to2.sch
+//Design Name: priority_encoder4to2
+//Device: artix7
+//Purpose:
+//    This verilog netlist is translated from an ECS schematic.It can be 
+//    synthesized and simulated, but it should not be modified. 
+//
+`timescale 1ns / 1ps
+
+module priority_encoder4to2(D0, 
+                            D1, 
+                            D2, 
+                            D3, 
+                            RST, 
+                            Valid, 
+                            X, 
+                            Y);
+
+    input D0;
+    input D1;
+    input D2;
+    input D3;
+    input RST;
+   output Valid;
+   output X;
+   output Y;
+   
+   wire XLXN_9;
+   wire XLXN_18;
+   wire XLXN_26;
+   wire XLXN_38;
+   wire XLXN_39;
+   wire XLXN_43;
+   
+   OR2  XLXI_1 (.I0(D3), 
+               .I1(D2), 
+               .O(XLXN_18));
+   AND2  XLXI_2 (.I0(XLXN_9), 
+                .I1(D1), 
+                .O(XLXN_38));
+   INV  XLXI_3 (.I(D2), 
+               .O(XLXN_9));
+   OR3  XLXI_5 (.I0(XLXN_18), 
+               .I1(D1), 
+               .I2(D0), 
+               .O(XLXN_26));
+   AND2  XLXI_6 (.I0(XLXN_39), 
+                .I1(XLXN_43), 
+                .O(Y));
+   AND2  XLXI_7 (.I0(XLXN_18), 
+                .I1(XLXN_43), 
+                .O(X));
+   AND2  XLXI_8 (.I0(XLXN_26), 
+                .I1(XLXN_43), 
+                .O(Valid));
+   OR2  XLXI_9 (.I0(XLXN_38), 
+               .I1(D3), 
+               .O(XLXN_39));
+   INV  XLXI_10 (.I(RST), 
+                .O(XLXN_43));
+endmodule

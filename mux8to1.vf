@@ -1,0 +1,151 @@
+////////////////////////////////////////////////////////////////////////////////
+// Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+////////////////////////////////////////////////////////////////////////////////
+//   ____  ____ 
+//  /   /\/   / 
+// /___/  \  /    Vendor: Xilinx 
+// \   \   \/     Version : 14.7
+//  \   \         Application : sch2hdl
+//  /   /         Filename : mux8to1.vf
+// /___/   /\     Timestamp : 11/24/2021 13:07:02
+// \   \  /  \ 
+//  \___\/\___\ 
+//
+//Command: sch2hdl -intstyle ise -family artix7 -verilog /home/dell-pc/Documents/pinE/signCalculator/mux8to1.vf -w /home/dell-pc/Documents/pinE/signCalculator/mux8to1.sch
+//Design Name: mux8to1
+//Device: artix7
+//Purpose:
+//    This verilog netlist is translated from an ECS schematic.It can be 
+//    synthesized and simulated, but it should not be modified. 
+//
+`timescale 1ns / 1ps
+
+module mux2to1_MUSER_mux8to1(i0, 
+                             i1, 
+                             RST, 
+                             sel, 
+                             Y);
+
+    input i0;
+    input i1;
+    input RST;
+    input sel;
+   output Y;
+   
+   wire XLXN_1;
+   wire XLXN_2;
+   wire XLXN_4;
+   wire XLXN_6;
+   wire XLXN_7;
+   
+   AND2  XLXI_1 (.I0(XLXN_1), 
+                .I1(i0), 
+                .O(XLXN_2));
+   AND2  XLXI_2 (.I0(sel), 
+                .I1(i1), 
+                .O(XLXN_4));
+   INV  XLXI_3 (.I(sel), 
+               .O(XLXN_1));
+   OR2  XLXI_4 (.I0(XLXN_4), 
+               .I1(XLXN_2), 
+               .O(XLXN_6));
+   AND2  XLXI_5 (.I0(XLXN_7), 
+                .I1(XLXN_6), 
+                .O(Y));
+   INV  XLXI_7 (.I(RST), 
+               .O(XLXN_7));
+endmodule
+`timescale 1ns / 1ps
+
+module mux4to1_MUSER_mux8to1(i0, 
+                             i1, 
+                             i2, 
+                             i3, 
+                             RST, 
+                             s0, 
+                             s1, 
+                             Y);
+
+    input i0;
+    input i1;
+    input i2;
+    input i3;
+    input RST;
+    input s0;
+    input s1;
+   output Y;
+   
+   wire XLXN_1;
+   wire XLXN_2;
+   
+   mux2to1_MUSER_mux8to1  XLXI_7 (.i0(i0), 
+                                 .i1(i1), 
+                                 .RST(RST), 
+                                 .sel(s0), 
+                                 .Y(XLXN_1));
+   mux2to1_MUSER_mux8to1  XLXI_8 (.i0(i2), 
+                                 .i1(i3), 
+                                 .RST(RST), 
+                                 .sel(s0), 
+                                 .Y(XLXN_2));
+   mux2to1_MUSER_mux8to1  XLXI_9 (.i0(XLXN_1), 
+                                 .i1(XLXN_2), 
+                                 .RST(RST), 
+                                 .sel(s1), 
+                                 .Y(Y));
+endmodule
+`timescale 1ns / 1ps
+
+module mux8to1(i0, 
+               i1, 
+               i2, 
+               i3, 
+               i4, 
+               i5, 
+               i6, 
+               i7, 
+               RST, 
+               s0, 
+               s1, 
+               s2, 
+               Y);
+
+    input i0;
+    input i1;
+    input i2;
+    input i3;
+    input i4;
+    input i5;
+    input i6;
+    input i7;
+    input RST;
+    input s0;
+    input s1;
+    input s2;
+   output Y;
+   
+   wire XLXN_1;
+   wire XLXN_2;
+   
+   mux4to1_MUSER_mux8to1  XLXI_6 (.i0(i0), 
+                                 .i1(i1), 
+                                 .i2(i2), 
+                                 .i3(i3), 
+                                 .RST(RST), 
+                                 .s0(s0), 
+                                 .s1(s1), 
+                                 .Y(XLXN_1));
+   mux4to1_MUSER_mux8to1  XLXI_7 (.i0(i4), 
+                                 .i1(i5), 
+                                 .i2(i6), 
+                                 .i3(i7), 
+                                 .RST(RST), 
+                                 .s0(s0), 
+                                 .s1(s1), 
+                                 .Y(XLXN_2));
+   mux2to1_MUSER_mux8to1  XLXI_8 (.i0(XLXN_1), 
+                                 .i1(XLXN_2), 
+                                 .RST(RST), 
+                                 .sel(s2), 
+                                 .Y(Y));
+endmodule

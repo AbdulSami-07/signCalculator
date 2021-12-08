@@ -1,0 +1,116 @@
+////////////////////////////////////////////////////////////////////////////////
+// Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+////////////////////////////////////////////////////////////////////////////////
+//   ____  ____ 
+//  /   /\/   / 
+// /___/  \  /    Vendor: Xilinx 
+// \   \   \/     Version : 14.7
+//  \   \         Application : sch2hdl
+//  /   /         Filename : demux1to8.vf
+// /___/   /\     Timestamp : 11/15/2021 14:50:32
+// \   \  /  \ 
+//  \___\/\___\ 
+//
+//Command: sch2hdl -intstyle ise -family artix7 -verilog /home/dell-pc/Music/test2/demux1to8.vf -w /home/dell-pc/Music/test2/demux1to8.sch
+//Design Name: demux1to8
+//Device: artix7
+//Purpose:
+//    This verilog netlist is translated from an ECS schematic.It can be 
+//    synthesized and simulated, but it should not be modified. 
+//
+`timescale 1ns / 1ps
+
+module demux1to2_MUSER_demux1to8(Input, 
+                                 RST, 
+                                 sel, 
+                                 Y0, 
+                                 Y1);
+
+    input Input;
+    input RST;
+    input sel;
+   output Y0;
+   output Y1;
+   
+   wire XLXN_2;
+   wire XLXN_3;
+   wire XLXN_11;
+   wire XLXN_12;
+   
+   AND2  XLXI_1 (.I0(Input), 
+                .I1(XLXN_2), 
+                .O(XLXN_11));
+   AND2  XLXI_2 (.I0(Input), 
+                .I1(sel), 
+                .O(XLXN_12));
+   INV  XLXI_3 (.I(sel), 
+               .O(XLXN_2));
+   AND2  XLXI_4 (.I0(XLXN_3), 
+                .I1(XLXN_11), 
+                .O(Y0));
+   AND2  XLXI_5 (.I0(XLXN_3), 
+                .I1(XLXN_12), 
+                .O(Y1));
+   INV  XLXI_6 (.I(RST), 
+               .O(XLXN_3));
+endmodule
+`timescale 1ns / 1ps
+
+module demux1to4_MUSER_demux1to8(Input, 
+                                 RST, 
+                                 Sel, 
+                                 Y);
+
+    input Input;
+    input RST;
+    input [1:0] Sel;
+   output [3:0] Y;
+   
+   wire XLXN_2;
+   wire XLXN_3;
+   
+   demux1to2_MUSER_demux1to8  XLXI_1 (.Input(Input), 
+                                     .RST(RST), 
+                                     .sel(Sel[1]), 
+                                     .Y0(XLXN_2), 
+                                     .Y1(XLXN_3));
+   demux1to2_MUSER_demux1to8  XLXI_2 (.Input(XLXN_2), 
+                                     .RST(RST), 
+                                     .sel(Sel[0]), 
+                                     .Y0(Y[0]), 
+                                     .Y1(Y[1]));
+   demux1to2_MUSER_demux1to8  XLXI_3 (.Input(XLXN_3), 
+                                     .RST(RST), 
+                                     .sel(Sel[0]), 
+                                     .Y0(Y[2]), 
+                                     .Y1(Y[3]));
+endmodule
+`timescale 1ns / 1ps
+
+module demux1to8(Input, 
+                 RST, 
+                 Sel, 
+                 Y);
+
+    input Input;
+    input RST;
+    input [2:0] Sel;
+   output [7:0] Y;
+   
+   wire XLXN_3;
+   wire XLXN_5;
+   
+   demux1to2_MUSER_demux1to8  XLXI_1 (.Input(Input), 
+                                     .RST(RST), 
+                                     .sel(Sel[2]), 
+                                     .Y0(XLXN_3), 
+                                     .Y1(XLXN_5));
+   demux1to4_MUSER_demux1to8  XLXI_2 (.Input(XLXN_3), 
+                                     .RST(RST), 
+                                     .Sel(Sel[1:0]), 
+                                     .Y(Y[3:0]));
+   demux1to4_MUSER_demux1to8  XLXI_3 (.Input(XLXN_5), 
+                                     .RST(RST), 
+                                     .Sel(Sel[1:0]), 
+                                     .Y(Y[7:4]));
+endmodule

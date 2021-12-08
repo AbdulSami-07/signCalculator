@@ -1,0 +1,117 @@
+////////////////////////////////////////////////////////////////////////////////
+// Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+////////////////////////////////////////////////////////////////////////////////
+//   ____  ____ 
+//  /   /\/   / 
+// /___/  \  /    Vendor: Xilinx 
+// \   \   \/     Version : 14.7
+//  \   \         Application : sch2hdl
+//  /   /         Filename : control_adder_subtractor.vf
+// /___/   /\     Timestamp : 11/24/2021 13:07:03
+// \   \  /  \ 
+//  \___\/\___\ 
+//
+//Command: sch2hdl -intstyle ise -family artix7 -verilog /home/dell-pc/Documents/pinE/signCalculator/control_adder_subtractor.vf -w /home/dell-pc/Documents/pinE/signCalculator/control_adder_subtractor.sch
+//Design Name: control_adder_subtractor
+//Device: artix7
+//Purpose:
+//    This verilog netlist is translated from an ECS schematic.It can be 
+//    synthesized and simulated, but it should not be modified. 
+//
+`timescale 1ns / 1ps
+
+module half_adder_MUSER_control_adder_subtractor(a, 
+                                                 b, 
+                                                 RST, 
+                                                 carry, 
+                                                 sum);
+
+    input a;
+    input b;
+    input RST;
+   output carry;
+   output sum;
+   
+   wire XLXN_2;
+   wire XLXN_9;
+   wire XLXN_10;
+   
+   AND2  XLXI_1 (.I0(b), 
+                .I1(a), 
+                .O(XLXN_9));
+   XOR2  XLXI_2 (.I0(b), 
+                .I1(a), 
+                .O(XLXN_10));
+   AND2  XLXI_3 (.I0(XLXN_2), 
+                .I1(XLXN_9), 
+                .O(carry));
+   AND2  XLXI_4 (.I0(XLXN_2), 
+                .I1(XLXN_10), 
+                .O(sum));
+   INV  XLXI_5 (.I(RST), 
+               .O(XLXN_2));
+endmodule
+`timescale 1ns / 1ps
+
+module full_adder_MUSER_control_adder_subtractor(a, 
+                                                 b, 
+                                                 c_in, 
+                                                 RST, 
+                                                 carry, 
+                                                 sum);
+
+    input a;
+    input b;
+    input c_in;
+    input RST;
+   output carry;
+   output sum;
+   
+   wire XLXN_1;
+   wire XLXN_5;
+   wire XLXN_6;
+   
+   OR2  XLXI_3 (.I0(XLXN_6), 
+               .I1(XLXN_5), 
+               .O(carry));
+   half_adder_MUSER_control_adder_subtractor  XLXI_4 (.a(a), 
+                                                     .b(b), 
+                                                     .RST(RST), 
+                                                     .carry(XLXN_5), 
+                                                     .sum(XLXN_1));
+   half_adder_MUSER_control_adder_subtractor  XLXI_5 (.a(XLXN_1), 
+                                                     .b(c_in), 
+                                                     .RST(RST), 
+                                                     .carry(XLXN_6), 
+                                                     .sum(sum));
+endmodule
+`timescale 1ns / 1ps
+
+module control_adder_subtractor(A, 
+                                B, 
+                                Carry_in, 
+                                Mode, 
+                                RST, 
+                                Carry_out, 
+                                Sum);
+
+    input A;
+    input B;
+    input Carry_in;
+    input Mode;
+    input RST;
+   output Carry_out;
+   output Sum;
+   
+   wire XLXN_2;
+   
+   full_adder_MUSER_control_adder_subtractor  XLXI_1 (.a(A), 
+                                                     .b(XLXN_2), 
+                                                     .c_in(Carry_in), 
+                                                     .RST(RST), 
+                                                     .carry(Carry_out), 
+                                                     .sum(Sum));
+   XOR2  XLXI_2 (.I0(Mode), 
+                .I1(B), 
+                .O(XLXN_2));
+endmodule

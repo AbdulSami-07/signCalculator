@@ -1,0 +1,90 @@
+////////////////////////////////////////////////////////////////////////////////
+// Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+////////////////////////////////////////////////////////////////////////////////
+//   ____  ____ 
+//  /   /\/   / 
+// /___/  \  /    Vendor: Xilinx 
+// \   \   \/     Version : 14.7
+//  \   \         Application : sch2hdl
+//  /   /         Filename : full_subtractor.vf
+// /___/   /\     Timestamp : 11/19/2021 22:41:17
+// \   \  /  \ 
+//  \___\/\___\ 
+//
+//Command: sch2hdl -intstyle ise -family artix7 -verilog /home/dell-pc/Music/test2/full_subtractor.vf -w /home/dell-pc/Music/test2/full_subtractor.sch
+//Design Name: full_subtractor
+//Device: artix7
+//Purpose:
+//    This verilog netlist is translated from an ECS schematic.It can be 
+//    synthesized and simulated, but it should not be modified. 
+//
+`timescale 1ns / 1ps
+
+module half_subtractor_MUSER_full_subtractor(a, 
+                                             b, 
+                                             RST, 
+                                             borrow, 
+                                             difference);
+
+    input a;
+    input b;
+    input RST;
+   output borrow;
+   output difference;
+   
+   wire XLXN_10;
+   wire XLXN_12;
+   wire XLXN_16;
+   wire XLXN_17;
+   
+   XOR2  XLXI_1 (.I0(b), 
+                .I1(a), 
+                .O(XLXN_16));
+   AND2  XLXI_2 (.I0(b), 
+                .I1(XLXN_10), 
+                .O(XLXN_17));
+   INV  XLXI_4 (.I(a), 
+               .O(XLXN_10));
+   INV  XLXI_5 (.I(RST), 
+               .O(XLXN_12));
+   AND2  XLXI_6 (.I0(XLXN_12), 
+                .I1(XLXN_16), 
+                .O(difference));
+   AND2  XLXI_7 (.I0(XLXN_12), 
+                .I1(XLXN_17), 
+                .O(borrow));
+endmodule
+`timescale 1ns / 1ps
+
+module full_subtractor(a, 
+                       b, 
+                       c, 
+                       RST, 
+                       borrow, 
+                       difference);
+
+    input a;
+    input b;
+    input c;
+    input RST;
+   output borrow;
+   output difference;
+   
+   wire XLXN_30;
+   wire XLXN_31;
+   wire XLXN_33;
+   
+   OR2  XLXI_4 (.I0(XLXN_31), 
+               .I1(XLXN_30), 
+               .O(borrow));
+   half_subtractor_MUSER_full_subtractor  XLXI_5 (.a(a), 
+                                                 .b(c), 
+                                                 .RST(RST), 
+                                                 .borrow(XLXN_31), 
+                                                 .difference(XLXN_33));
+   half_subtractor_MUSER_full_subtractor  XLXI_6 (.a(XLXN_33), 
+                                                 .b(b), 
+                                                 .RST(RST), 
+                                                 .borrow(XLXN_30), 
+                                                 .difference(difference));
+endmodule

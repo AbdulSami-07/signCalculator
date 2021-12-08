@@ -1,0 +1,56 @@
+////////////////////////////////////////////////////////////////////////////////
+// Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+////////////////////////////////////////////////////////////////////////////////
+//   ____  ____ 
+//  /   /\/   / 
+// /___/  \  /    Vendor: Xilinx 
+// \   \   \/     Version : 14.7
+//  \   \         Application : sch2hdl
+//  /   /         Filename : demux1to2.vf
+// /___/   /\     Timestamp : 11/15/2021 14:50:32
+// \   \  /  \ 
+//  \___\/\___\ 
+//
+//Command: sch2hdl -intstyle ise -family artix7 -verilog /home/dell-pc/Music/test2/demux1to2.vf -w /home/dell-pc/Music/test2/demux1to2.sch
+//Design Name: demux1to2
+//Device: artix7
+//Purpose:
+//    This verilog netlist is translated from an ECS schematic.It can be 
+//    synthesized and simulated, but it should not be modified. 
+//
+`timescale 1ns / 1ps
+
+module demux1to2(Input, 
+                 RST, 
+                 sel, 
+                 Y0, 
+                 Y1);
+
+    input Input;
+    input RST;
+    input sel;
+   output Y0;
+   output Y1;
+   
+   wire XLXN_2;
+   wire XLXN_3;
+   wire XLXN_11;
+   wire XLXN_12;
+   
+   AND2  XLXI_1 (.I0(Input), 
+                .I1(XLXN_2), 
+                .O(XLXN_11));
+   AND2  XLXI_2 (.I0(Input), 
+                .I1(sel), 
+                .O(XLXN_12));
+   INV  XLXI_3 (.I(sel), 
+               .O(XLXN_2));
+   AND2  XLXI_4 (.I0(XLXN_3), 
+                .I1(XLXN_11), 
+                .O(Y0));
+   AND2  XLXI_5 (.I0(XLXN_3), 
+                .I1(XLXN_12), 
+                .O(Y1));
+   INV  XLXI_6 (.I(RST), 
+               .O(XLXN_3));
+endmodule

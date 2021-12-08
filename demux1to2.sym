@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<symbol version="7" name="demux1to2">
+    <symboltype>BLOCK</symboltype>
+    <timestamp>2021-11-12T18:25:56</timestamp>
+    <pin polarity="Input" x="0" y="-192" name="Input" />
+    <pin polarity="Input" x="128" y="-320" name="RST" />
+    <pin polarity="Input" x="128" y="0" name="sel" />
+    <pin polarity="Output" x="320" y="-192" name="Y0" />
+    <pin polarity="Output" x="320" y="-128" name="Y1" />
+    <graph>
+        <rect width="192" x="64" y="-256" height="192" />
+        <attrtext style="alignment:CENTER;fontsize:28;fontname:Arial" attrname="SymbolName" x="160" y="-160" type="symbol" />
+        <line x2="0" y1="-192" y2="-192" x1="64" />
+        <attrtext style="fontsize:20;fontname:Arial" attrname="PinName" x="72" y="-192" type="pin Input" />
+        <line x2="128" y1="-256" y2="-320" x1="128" />
+        <attrtext style="alignment:VRIGHT;fontsize:20;fontname:Arial" attrname="PinName" x="128" y="-248" type="pin RST" />
+        <line x2="128" y1="-64" y2="0" x1="128" />
+        <attrtext style="alignment:VLEFT;fontsize:20;fontname:Arial" attrname="PinName" x="128" y="-72" type="pin sel" />
+        <line x2="320" y1="-192" y2="-192" x1="256" />
+        <attrtext style="alignment:RIGHT;fontsize:20;fontname:Arial" attrname="PinName" x="248" y="-192" type="pin Y0" />
+        <line x2="320" y1="-128" y2="-128" x1="256" />
+        <attrtext style="alignment:RIGHT;fontsize:20;fontname:Arial" attrname="PinName" x="248" y="-128" type="pin Y1" />
+    </graph>
+</symbol>

@@ -1,0 +1,138 @@
+////////////////////////////////////////////////////////////////////////////////
+// Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+////////////////////////////////////////////////////////////////////////////////
+//   ____  ____ 
+//  /   /\/   / 
+// /___/  \  /    Vendor: Xilinx 
+// \   \   \/     Version : 14.7
+//  \   \         Application : sch2hdl
+//  /   /         Filename : complement_2s8.vf
+// /___/   /\     Timestamp : 11/24/2021 13:07:03
+// \   \  /  \ 
+//  \___\/\___\ 
+//
+//Command: sch2hdl -intstyle ise -family artix7 -verilog /home/dell-pc/Documents/pinE/signCalculator/complement_2s8.vf -w /home/dell-pc/Documents/pinE/signCalculator/complement_2s8.sch
+//Design Name: complement_2s8
+//Device: artix7
+//Purpose:
+//    This verilog netlist is translated from an ECS schematic.It can be 
+//    synthesized and simulated, but it should not be modified. 
+//
+`timescale 1ns / 1ps
+
+module half_adder_MUSER_complement_2s8(a, 
+                                       b, 
+                                       RST, 
+                                       carry, 
+                                       sum);
+
+    input a;
+    input b;
+    input RST;
+   output carry;
+   output sum;
+   
+   wire XLXN_2;
+   wire XLXN_9;
+   wire XLXN_10;
+   
+   AND2  XLXI_1 (.I0(b), 
+                .I1(a), 
+                .O(XLXN_9));
+   XOR2  XLXI_2 (.I0(b), 
+                .I1(a), 
+                .O(XLXN_10));
+   AND2  XLXI_3 (.I0(XLXN_2), 
+                .I1(XLXN_9), 
+                .O(carry));
+   AND2  XLXI_4 (.I0(XLXN_2), 
+                .I1(XLXN_10), 
+                .O(sum));
+   INV  XLXI_5 (.I(RST), 
+               .O(XLXN_2));
+endmodule
+`timescale 1ns / 1ps
+
+module complement_2s8(A, 
+                      RST, 
+                      Y);
+
+    input [7:0] A;
+    input RST;
+   output [7:0] Y;
+   
+   wire XLXN_12;
+   wire XLXN_13;
+   wire XLXN_14;
+   wire XLXN_18;
+   wire XLXN_19;
+   wire XLXN_21;
+   wire XLXN_22;
+   wire XLXN_41;
+   wire XLXN_42;
+   wire XLXN_43;
+   wire XLXN_44;
+   wire XLXN_46;
+   wire XLXN_47;
+   wire XLXN_51;
+   wire XLXN_105;
+   wire XLXN_106;
+   
+   INV  XLXI_5 (.I(A[7]), 
+               .O(XLXN_46));
+   INV  XLXI_6 (.I(A[6]), 
+               .O(XLXN_44));
+   INV  XLXI_8 (.I(A[5]), 
+               .O(XLXN_43));
+   INV  XLXI_9 (.I(A[4]), 
+               .O(XLXN_42));
+   INV  XLXI_10 (.I(A[3]), 
+                .O(XLXN_41));
+   INV  XLXI_11 (.I(A[2]), 
+                .O(XLXN_22));
+   INV  XLXI_12 (.I(A[1]), 
+                .O(XLXN_21));
+   INV  XLXI_13 (.I(A[0]), 
+                .O(XLXN_12));
+   half_adder_MUSER_complement_2s8  XLXI_15 (.a(XLXN_51), 
+                                            .b(XLXN_12), 
+                                            .RST(RST), 
+                                            .carry(XLXN_13), 
+                                            .sum(Y[0]));
+   half_adder_MUSER_complement_2s8  XLXI_16 (.a(XLXN_13), 
+                                            .b(XLXN_21), 
+                                            .RST(RST), 
+                                            .carry(XLXN_14), 
+                                            .sum(Y[1]));
+   half_adder_MUSER_complement_2s8  XLXI_17 (.a(XLXN_22), 
+                                            .b(XLXN_14), 
+                                            .RST(RST), 
+                                            .carry(XLXN_105), 
+                                            .sum(Y[2]));
+   half_adder_MUSER_complement_2s8  XLXI_18 (.a(XLXN_41), 
+                                            .b(XLXN_105), 
+                                            .RST(RST), 
+                                            .carry(XLXN_106), 
+                                            .sum(Y[3]));
+   half_adder_MUSER_complement_2s8  XLXI_19 (.a(XLXN_42), 
+                                            .b(XLXN_106), 
+                                            .RST(RST), 
+                                            .carry(XLXN_18), 
+                                            .sum(Y[4]));
+   half_adder_MUSER_complement_2s8  XLXI_20 (.a(XLXN_43), 
+                                            .b(XLXN_18), 
+                                            .RST(RST), 
+                                            .carry(XLXN_19), 
+                                            .sum(Y[5]));
+   half_adder_MUSER_complement_2s8  XLXI_21 (.a(XLXN_44), 
+                                            .b(XLXN_19), 
+                                            .RST(RST), 
+                                            .carry(XLXN_47), 
+                                            .sum(Y[6]));
+   half_adder_MUSER_complement_2s8  XLXI_23 (.a(XLXN_46), 
+                                            .b(XLXN_47), 
+                                            .RST(RST), 
+                                            .carry(), 
+                                            .sum(Y[7]));
+   VCC  XLXI_24 (.P(XLXN_51));
+endmodule

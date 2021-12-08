@@ -1,0 +1,132 @@
+////////////////////////////////////////////////////////////////////////////////
+// Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+////////////////////////////////////////////////////////////////////////////////
+//   ____  ____ 
+//  /   /\/   / 
+// /___/  \  /    Vendor: Xilinx 
+// \   \   \/     Version : 14.7
+//  \   \         Application : sch2hdl
+//  /   /         Filename : decoder3to8.vf
+// /___/   /\     Timestamp : 11/24/2021 18:31:31
+// \   \  /  \ 
+//  \___\/\___\ 
+//
+//Command: sch2hdl -intstyle ise -family artix7 -verilog /home/dell-pc/Documents/pinE/signCalculator/decoder3to8.vf -w /home/dell-pc/Documents/pinE/signCalculator/decoder3to8.sch
+//Design Name: decoder3to8
+//Device: artix7
+//Purpose:
+//    This verilog netlist is translated from an ECS schematic.It can be 
+//    synthesized and simulated, but it should not be modified. 
+//
+`timescale 1ns / 1ps
+
+module decoder2to4_MUSER_decoder3to8(RST, 
+                                     X, 
+                                     Y, 
+                                     D0, 
+                                     D1, 
+                                     D2, 
+                                     D3);
+
+    input RST;
+    input X;
+    input Y;
+   output D0;
+   output D1;
+   output D2;
+   output D3;
+   
+   wire XLXN_4;
+   wire XLXN_5;
+   wire XLXN_24;
+   wire XLXN_25;
+   wire XLXN_26;
+   wire XLXN_27;
+   wire XLXN_32;
+   
+   INV  XLXI_1 (.I(X), 
+               .O(XLXN_5));
+   INV  XLXI_2 (.I(Y), 
+               .O(XLXN_4));
+   AND2  XLXI_3 (.I0(XLXN_4), 
+                .I1(XLXN_5), 
+                .O(XLXN_27));
+   AND2  XLXI_4 (.I0(Y), 
+                .I1(XLXN_5), 
+                .O(XLXN_26));
+   AND2  XLXI_5 (.I0(XLXN_4), 
+                .I1(X), 
+                .O(XLXN_25));
+   AND2  XLXI_6 (.I0(Y), 
+                .I1(X), 
+                .O(XLXN_24));
+   AND2  XLXI_7 (.I0(XLXN_27), 
+                .I1(XLXN_32), 
+                .O(D0));
+   AND2  XLXI_8 (.I0(XLXN_26), 
+                .I1(XLXN_32), 
+                .O(D1));
+   AND2  XLXI_9 (.I0(XLXN_25), 
+                .I1(XLXN_32), 
+                .O(D2));
+   AND2  XLXI_10 (.I0(XLXN_24), 
+                 .I1(XLXN_32), 
+                 .O(D3));
+   INV  XLXI_11 (.I(RST), 
+                .O(XLXN_32));
+endmodule
+`timescale 1ns / 1ps
+
+module decoder3to8(RST, 
+                   X, 
+                   Y, 
+                   Z, 
+                   D0, 
+                   D1, 
+                   D2, 
+                   D3, 
+                   D4, 
+                   D5, 
+                   D6, 
+                   D7);
+
+    input RST;
+    input X;
+    input Y;
+    input Z;
+   output D0;
+   output D1;
+   output D2;
+   output D3;
+   output D4;
+   output D5;
+   output D6;
+   output D7;
+   
+   wire XLXN_13;
+   wire XLXN_14;
+   wire XLXN_15;
+   
+   decoder2to4_MUSER_decoder3to8  XLXI_1 (.RST(XLXN_13), 
+                                         .X(Y), 
+                                         .Y(Z), 
+                                         .D0(D0), 
+                                         .D1(D1), 
+                                         .D2(D2), 
+                                         .D3(D3));
+   decoder2to4_MUSER_decoder3to8  XLXI_2 (.RST(XLXN_15), 
+                                         .X(Y), 
+                                         .Y(Z), 
+                                         .D0(D4), 
+                                         .D1(D5), 
+                                         .D2(D6), 
+                                         .D3(D7));
+   OR2  XLXI_4 (.I0(X), 
+               .I1(RST), 
+               .O(XLXN_13));
+   OR2  XLXI_5 (.I0(RST), 
+               .I1(XLXN_14), 
+               .O(XLXN_15));
+   INV  XLXI_6 (.I(X), 
+               .O(XLXN_14));
+endmodule

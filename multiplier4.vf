@@ -1,0 +1,253 @@
+////////////////////////////////////////////////////////////////////////////////
+// Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+////////////////////////////////////////////////////////////////////////////////
+//   ____  ____ 
+//  /   /\/   / 
+// /___/  \  /    Vendor: Xilinx 
+// \   \   \/     Version : 14.7
+//  \   \         Application : sch2hdl
+//  /   /         Filename : multiplier4.vf
+// /___/   /\     Timestamp : 11/24/2021 13:07:02
+// \   \  /  \ 
+//  \___\/\___\ 
+//
+//Command: sch2hdl -intstyle ise -family artix7 -verilog /home/dell-pc/Documents/pinE/signCalculator/multiplier4.vf -w /home/dell-pc/Documents/pinE/signCalculator/multiplier4.sch
+//Design Name: multiplier4
+//Device: artix7
+//Purpose:
+//    This verilog netlist is translated from an ECS schematic.It can be 
+//    synthesized and simulated, but it should not be modified. 
+//
+`timescale 1ns / 1ps
+
+module half_adder_MUSER_multiplier4(a, 
+                                    b, 
+                                    RST, 
+                                    carry, 
+                                    sum);
+
+    input a;
+    input b;
+    input RST;
+   output carry;
+   output sum;
+   
+   wire XLXN_2;
+   wire XLXN_9;
+   wire XLXN_10;
+   
+   AND2  XLXI_1 (.I0(b), 
+                .I1(a), 
+                .O(XLXN_9));
+   XOR2  XLXI_2 (.I0(b), 
+                .I1(a), 
+                .O(XLXN_10));
+   AND2  XLXI_3 (.I0(XLXN_2), 
+                .I1(XLXN_9), 
+                .O(carry));
+   AND2  XLXI_4 (.I0(XLXN_2), 
+                .I1(XLXN_10), 
+                .O(sum));
+   INV  XLXI_5 (.I(RST), 
+               .O(XLXN_2));
+endmodule
+`timescale 1ns / 1ps
+
+module full_adder_MUSER_multiplier4(a, 
+                                    b, 
+                                    c_in, 
+                                    RST, 
+                                    carry, 
+                                    sum);
+
+    input a;
+    input b;
+    input c_in;
+    input RST;
+   output carry;
+   output sum;
+   
+   wire XLXN_1;
+   wire XLXN_5;
+   wire XLXN_6;
+   
+   OR2  XLXI_3 (.I0(XLXN_6), 
+               .I1(XLXN_5), 
+               .O(carry));
+   half_adder_MUSER_multiplier4  XLXI_4 (.a(a), 
+                                        .b(b), 
+                                        .RST(RST), 
+                                        .carry(XLXN_5), 
+                                        .sum(XLXN_1));
+   half_adder_MUSER_multiplier4  XLXI_5 (.a(XLXN_1), 
+                                        .b(c_in), 
+                                        .RST(RST), 
+                                        .carry(XLXN_6), 
+                                        .sum(sum));
+endmodule
+`timescale 1ns / 1ps
+
+module multiplier4(A, 
+                   B, 
+                   RST, 
+                   Product);
+
+    input [3:0] A;
+    input [3:0] B;
+    input RST;
+   output [7:0] Product;
+   
+   wire XLXN_34;
+   wire XLXN_35;
+   wire XLXN_36;
+   wire XLXN_37;
+   wire XLXN_38;
+   wire XLXN_39;
+   wire XLXN_40;
+   wire XLXN_41;
+   wire XLXN_42;
+   wire XLXN_43;
+   wire XLXN_66;
+   wire XLXN_67;
+   wire XLXN_68;
+   wire XLXN_69;
+   wire XLXN_70;
+   wire XLXN_74;
+   wire XLXN_76;
+   wire XLXN_78;
+   wire XLXN_80;
+   wire XLXN_136;
+   wire XLXN_138;
+   wire XLXN_139;
+   wire XLXN_140;
+   wire XLXN_141;
+   wire XLXN_142;
+   wire XLXN_143;
+   wire XLXN_144;
+   wire XLXN_145;
+   wire XLXN_146;
+   wire XLXN_149;
+   wire XLXN_151;
+   wire XLXN_159;
+   wire XLXN_168;
+   
+   AND2  XLXI_1 (.I0(A[0]), 
+                .I1(B[0]), 
+                .O(XLXN_159));
+   AND2  XLXI_3 (.I0(A[1]), 
+                .I1(B[0]), 
+                .O(XLXN_35));
+   AND2  XLXI_4 (.I0(A[2]), 
+                .I1(B[0]), 
+                .O(XLXN_39));
+   AND2  XLXI_5 (.I0(A[3]), 
+                .I1(B[0]), 
+                .O(XLXN_41));
+   AND2  XLXI_6 (.I0(A[0]), 
+                .I1(B[1]), 
+                .O(XLXN_34));
+   AND2  XLXI_7 (.I0(A[1]), 
+                .I1(B[1]), 
+                .O(XLXN_38));
+   AND2  XLXI_8 (.I0(A[2]), 
+                .I1(B[1]), 
+                .O(XLXN_40));
+   AND2  XLXI_9 (.I0(A[3]), 
+                .I1(B[1]), 
+                .O(XLXN_42));
+   half_adder_MUSER_multiplier4  XLXI_10 (.a(XLXN_34), 
+                                         .b(XLXN_35), 
+                                         .RST(RST), 
+                                         .carry(XLXN_36), 
+                                         .sum(Product[1]));
+   full_adder_MUSER_multiplier4  XLXI_11 (.a(XLXN_40), 
+                                         .b(XLXN_41), 
+                                         .c_in(XLXN_37), 
+                                         .RST(RST), 
+                                         .carry(XLXN_43), 
+                                         .sum(XLXN_69));
+   full_adder_MUSER_multiplier4  XLXI_14 (.a(XLXN_38), 
+                                         .b(XLXN_39), 
+                                         .c_in(XLXN_36), 
+                                         .RST(RST), 
+                                         .carry(XLXN_37), 
+                                         .sum(XLXN_67));
+   half_adder_MUSER_multiplier4  XLXI_16 (.a(XLXN_43), 
+                                         .b(XLXN_42), 
+                                         .RST(RST), 
+                                         .carry(XLXN_80), 
+                                         .sum(XLXN_74));
+   AND2  XLXI_17 (.I0(A[0]), 
+                 .I1(B[2]), 
+                 .O(XLXN_66));
+   AND2  XLXI_18 (.I0(A[1]), 
+                 .I1(B[2]), 
+                 .O(XLXN_68));
+   AND2  XLXI_19 (.I0(A[2]), 
+                 .I1(B[2]), 
+                 .O(XLXN_70));
+   AND2  XLXI_20 (.I0(A[3]), 
+                 .I1(B[2]), 
+                 .O(XLXN_76));
+   half_adder_MUSER_multiplier4  XLXI_21 (.a(XLXN_66), 
+                                         .b(XLXN_67), 
+                                         .RST(RST), 
+                                         .carry(XLXN_168), 
+                                         .sum(Product[2]));
+   full_adder_MUSER_multiplier4  XLXI_22 (.a(XLXN_68), 
+                                         .b(XLXN_69), 
+                                         .c_in(XLXN_168), 
+                                         .RST(RST), 
+                                         .carry(XLXN_78), 
+                                         .sum(XLXN_138));
+   full_adder_MUSER_multiplier4  XLXI_23 (.a(XLXN_70), 
+                                         .b(XLXN_74), 
+                                         .c_in(XLXN_78), 
+                                         .RST(RST), 
+                                         .carry(XLXN_141), 
+                                         .sum(XLXN_140));
+   full_adder_MUSER_multiplier4  XLXI_24 (.a(XLXN_76), 
+                                         .b(XLXN_80), 
+                                         .c_in(XLXN_141), 
+                                         .RST(RST), 
+                                         .carry(XLXN_151), 
+                                         .sum(XLXN_144));
+   AND2  XLXI_25 (.I0(A[0]), 
+                 .I1(B[3]), 
+                 .O(XLXN_136));
+   AND2  XLXI_26 (.I0(A[1]), 
+                 .I1(B[3]), 
+                 .O(XLXN_139));
+   AND2  XLXI_27 (.I0(A[2]), 
+                 .I1(B[3]), 
+                 .O(XLXN_143));
+   half_adder_MUSER_multiplier4  XLXI_52 (.a(XLXN_136), 
+                                         .b(XLXN_138), 
+                                         .RST(RST), 
+                                         .carry(XLXN_142), 
+                                         .sum(Product[3]));
+   full_adder_MUSER_multiplier4  XLXI_53 (.a(XLXN_139), 
+                                         .b(XLXN_140), 
+                                         .c_in(XLXN_142), 
+                                         .RST(RST), 
+                                         .carry(XLXN_145), 
+                                         .sum(Product[4]));
+   full_adder_MUSER_multiplier4  XLXI_54 (.a(XLXN_143), 
+                                         .b(XLXN_144), 
+                                         .c_in(XLXN_145), 
+                                         .RST(RST), 
+                                         .carry(XLXN_149), 
+                                         .sum(Product[5]));
+   full_adder_MUSER_multiplier4  XLXI_55 (.a(XLXN_146), 
+                                         .b(XLXN_151), 
+                                         .c_in(XLXN_149), 
+                                         .RST(RST), 
+                                         .carry(Product[7]), 
+                                         .sum(Product[6]));
+   AND2  XLXI_59 (.I0(A[3]), 
+                 .I1(B[3]), 
+                 .O(XLXN_146));
+   AND2B1  XLXI_62 (.I0(RST), 
+                   .I1(XLXN_159), 
+                   .O(Product[0]));
+endmodule

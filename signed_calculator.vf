@@ -1,0 +1,1267 @@
+////////////////////////////////////////////////////////////////////////////////
+// Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+////////////////////////////////////////////////////////////////////////////////
+//   ____  ____ 
+//  /   /\/   / 
+// /___/  \  /    Vendor: Xilinx 
+// \   \   \/     Version : 14.7
+//  \   \         Application : sch2hdl
+//  /   /         Filename : signed_calculator.vf
+// /___/   /\     Timestamp : 11/24/2021 20:23:14
+// \   \  /  \ 
+//  \___\/\___\ 
+//
+//Command: sch2hdl -intstyle ise -family artix7 -verilog /home/dell-pc/Documents/pinE/signCalculator/signed_calculator.vf -w /home/dell-pc/Documents/pinE/signCalculator/signed_calculator.sch
+//Design Name: signed_calculator
+//Device: artix7
+//Purpose:
+//    This verilog netlist is translated from an ECS schematic.It can be 
+//    synthesized and simulated, but it should not be modified. 
+//
+`timescale 1ns / 1ps
+
+module mux2to1_MUSER_signed_calculator(i0, 
+                                       i1, 
+                                       RST, 
+                                       sel, 
+                                       Y);
+
+    input i0;
+    input i1;
+    input RST;
+    input sel;
+   output Y;
+   
+   wire XLXN_1;
+   wire XLXN_2;
+   wire XLXN_4;
+   wire XLXN_6;
+   wire XLXN_7;
+   
+   AND2  XLXI_1 (.I0(XLXN_1), 
+                .I1(i0), 
+                .O(XLXN_2));
+   AND2  XLXI_2 (.I0(sel), 
+                .I1(i1), 
+                .O(XLXN_4));
+   INV  XLXI_3 (.I(sel), 
+               .O(XLXN_1));
+   OR2  XLXI_4 (.I0(XLXN_4), 
+               .I1(XLXN_2), 
+               .O(XLXN_6));
+   AND2  XLXI_5 (.I0(XLXN_7), 
+                .I1(XLXN_6), 
+                .O(Y));
+   INV  XLXI_7 (.I(RST), 
+               .O(XLXN_7));
+endmodule
+`timescale 1ns / 1ps
+
+module half_adder_MUSER_signed_calculator(a, 
+                                          b, 
+                                          RST, 
+                                          carry, 
+                                          sum);
+
+    input a;
+    input b;
+    input RST;
+   output carry;
+   output sum;
+   
+   wire XLXN_2;
+   wire XLXN_9;
+   wire XLXN_10;
+   
+   AND2  XLXI_1 (.I0(b), 
+                .I1(a), 
+                .O(XLXN_9));
+   XOR2  XLXI_2 (.I0(b), 
+                .I1(a), 
+                .O(XLXN_10));
+   AND2  XLXI_3 (.I0(XLXN_2), 
+                .I1(XLXN_9), 
+                .O(carry));
+   AND2  XLXI_4 (.I0(XLXN_2), 
+                .I1(XLXN_10), 
+                .O(sum));
+   INV  XLXI_5 (.I(RST), 
+               .O(XLXN_2));
+endmodule
+`timescale 1ns / 1ps
+
+module full_adder_MUSER_signed_calculator(a, 
+                                          b, 
+                                          c_in, 
+                                          RST, 
+                                          carry, 
+                                          sum);
+
+    input a;
+    input b;
+    input c_in;
+    input RST;
+   output carry;
+   output sum;
+   
+   wire XLXN_1;
+   wire XLXN_5;
+   wire XLXN_6;
+   
+   OR2  XLXI_3 (.I0(XLXN_6), 
+               .I1(XLXN_5), 
+               .O(carry));
+   half_adder_MUSER_signed_calculator  XLXI_4 (.a(a), 
+                                              .b(b), 
+                                              .RST(RST), 
+                                              .carry(XLXN_5), 
+                                              .sum(XLXN_1));
+   half_adder_MUSER_signed_calculator  XLXI_5 (.a(XLXN_1), 
+                                              .b(c_in), 
+                                              .RST(RST), 
+                                              .carry(XLXN_6), 
+                                              .sum(sum));
+endmodule
+`timescale 1ns / 1ps
+
+module control_adder_subtractor_MUSER_signed_calculator(A, 
+                                                        B, 
+                                                        Carry_in, 
+                                                        Mode, 
+                                                        RST, 
+                                                        Carry_out, 
+                                                        Sum);
+
+    input A;
+    input B;
+    input Carry_in;
+    input Mode;
+    input RST;
+   output Carry_out;
+   output Sum;
+   
+   wire XLXN_2;
+   
+   full_adder_MUSER_signed_calculator  XLXI_1 (.a(A), 
+                                              .b(XLXN_2), 
+                                              .c_in(Carry_in), 
+                                              .RST(RST), 
+                                              .carry(Carry_out), 
+                                              .sum(Sum));
+   XOR2  XLXI_2 (.I0(Mode), 
+                .I1(B), 
+                .O(XLXN_2));
+endmodule
+`timescale 1ns / 1ps
+
+module divider4_MUSER_signed_calculator(b, 
+                                        D, 
+                                        RST, 
+                                        Q, 
+                                        R);
+
+    input [3:0] b;
+    input [3:0] D;
+    input RST;
+   output [3:0] Q;
+   output [3:0] R;
+   
+   wire XLXN_4;
+   wire XLXN_17;
+   wire XLXN_18;
+   wire XLXN_22;
+   wire XLXN_46;
+   wire XLXN_47;
+   wire XLXN_48;
+   wire XLXN_71;
+   wire XLXN_73;
+   wire XLXN_82;
+   wire XLXN_83;
+   wire XLXN_84;
+   wire XLXN_92;
+   wire XLXN_93;
+   wire XLXN_94;
+   wire XLXN_158;
+   wire XLXN_159;
+   wire XLXN_160;
+   wire XLXN_166;
+   wire XLXN_167;
+   wire XLXN_168;
+   wire XLXN_188;
+   wire XLXN_189;
+   wire XLXN_191;
+   wire XLXN_199;
+   wire XLXN_200;
+   wire XLXN_201;
+   wire XLXN_202;
+   wire XLXN_203;
+   wire XLXN_204;
+   wire XLXN_205;
+   wire XLXN_220;
+   wire XLXN_227;
+   wire XLXN_238;
+   wire XLXN_240;
+   wire XLXN_242;
+   wire [3:0] Q_DUMMY;
+   
+   assign Q[3:0] = Q_DUMMY[3:0];
+   control_adder_subtractor_MUSER_signed_calculator  XLXI_3 (.A(D[3]), 
+                                                            .B(b[0]), 
+                                                            .Carry_in(XLXN_4), 
+                                                            .Mode(XLXN_4), 
+                                                            .RST(RST), 
+                                                            
+         .Carry_out(XLXN_22), 
+                                                            .Sum(XLXN_48));
+   control_adder_subtractor_MUSER_signed_calculator  XLXI_4 (.A(XLXN_242), 
+                                                            .B(b[1]), 
+                                                            .Carry_in(XLXN_22), 
+                                                            .Mode(XLXN_4), 
+                                                            .RST(RST), 
+                                                            
+         .Carry_out(XLXN_18), 
+                                                            .Sum(XLXN_47));
+   control_adder_subtractor_MUSER_signed_calculator  XLXI_5 (.A(XLXN_242), 
+                                                            .B(b[2]), 
+                                                            .Carry_in(XLXN_18), 
+                                                            .Mode(XLXN_4), 
+                                                            .RST(RST), 
+                                                            
+         .Carry_out(XLXN_17), 
+                                                            .Sum(XLXN_46));
+   control_adder_subtractor_MUSER_signed_calculator  XLXI_6 (.A(XLXN_242), 
+                                                            .B(b[3]), 
+                                                            .Carry_in(XLXN_17), 
+                                                            .Mode(XLXN_4), 
+                                                            .RST(RST), 
+                                                            
+         .Carry_out(Q_DUMMY[3]), 
+                                                            .Sum());
+   VCC  XLXI_7 (.P(XLXN_4));
+   GND  XLXI_8 (.G(XLXN_242));
+   mux2to1_MUSER_signed_calculator  XLXI_11 (.i0(XLXN_242), 
+                                            .i1(XLXN_46), 
+                                            .RST(RST), 
+                                            .sel(Q_DUMMY[3]), 
+                                            .Y(XLXN_71));
+   mux2to1_MUSER_signed_calculator  XLXI_13 (.i0(D[3]), 
+                                            .i1(XLXN_48), 
+                                            .RST(RST), 
+                                            .sel(Q_DUMMY[3]), 
+                                            .Y(XLXN_73));
+   mux2to1_MUSER_signed_calculator  XLXI_14 (.i0(XLXN_242), 
+                                            .i1(XLXN_47), 
+                                            .RST(RST), 
+                                            .sel(Q_DUMMY[3]), 
+                                            .Y(XLXN_220));
+   control_adder_subtractor_MUSER_signed_calculator  XLXI_15 (.A(XLXN_71), 
+                                                             .B(b[3]), 
+                                                             
+         .Carry_in(XLXN_82), 
+                                                             .Mode(XLXN_4), 
+                                                             .RST(RST), 
+                                                             
+         .Carry_out(Q_DUMMY[2]), 
+                                                             .Sum());
+   control_adder_subtractor_MUSER_signed_calculator  XLXI_16 (.A(XLXN_220), 
+                                                             .B(b[2]), 
+                                                             
+         .Carry_in(XLXN_83), 
+                                                             .Mode(XLXN_4), 
+                                                             .RST(RST), 
+                                                             
+         .Carry_out(XLXN_82), 
+                                                             .Sum(XLXN_92));
+   control_adder_subtractor_MUSER_signed_calculator  XLXI_17 (.A(XLXN_73), 
+                                                             .B(b[1]), 
+                                                             
+         .Carry_in(XLXN_84), 
+                                                             .Mode(XLXN_4), 
+                                                             .RST(RST), 
+                                                             
+         .Carry_out(XLXN_83), 
+                                                             .Sum(XLXN_93));
+   control_adder_subtractor_MUSER_signed_calculator  XLXI_19 (.A(D[2]), 
+                                                             .B(b[0]), 
+                                                             .Carry_in(XLXN_4), 
+                                                             .Mode(XLXN_4), 
+                                                             .RST(RST), 
+                                                             
+         .Carry_out(XLXN_84), 
+                                                             .Sum(XLXN_94));
+   mux2to1_MUSER_signed_calculator  XLXI_20 (.i0(XLXN_220), 
+                                            .i1(XLXN_92), 
+                                            .RST(RST), 
+                                            .sel(Q_DUMMY[2]), 
+                                            .Y(XLXN_227));
+   mux2to1_MUSER_signed_calculator  XLXI_21 (.i0(D[3]), 
+                                            .i1(XLXN_93), 
+                                            .RST(RST), 
+                                            .sel(Q_DUMMY[2]), 
+                                            .Y(XLXN_238));
+   mux2to1_MUSER_signed_calculator  XLXI_22 (.i0(D[2]), 
+                                            .i1(XLXN_94), 
+                                            .RST(RST), 
+                                            .sel(Q_DUMMY[2]), 
+                                            .Y(XLXN_240));
+   control_adder_subtractor_MUSER_signed_calculator  XLXI_41 (.A(XLXN_227), 
+                                                             .B(b[3]), 
+                                                             
+         .Carry_in(XLXN_158), 
+                                                             .Mode(XLXN_4), 
+                                                             .RST(RST), 
+                                                             
+         .Carry_out(Q_DUMMY[1]), 
+                                                             .Sum());
+   control_adder_subtractor_MUSER_signed_calculator  XLXI_42 (.A(XLXN_238), 
+                                                             .B(b[2]), 
+                                                             
+         .Carry_in(XLXN_159), 
+                                                             .Mode(XLXN_4), 
+                                                             .RST(RST), 
+                                                             
+         .Carry_out(XLXN_158), 
+                                                             .Sum(XLXN_166));
+   control_adder_subtractor_MUSER_signed_calculator  XLXI_43 (.A(XLXN_240), 
+                                                             .B(b[1]), 
+                                                             
+         .Carry_in(XLXN_160), 
+                                                             .Mode(XLXN_4), 
+                                                             .RST(RST), 
+                                                             
+         .Carry_out(XLXN_159), 
+                                                             .Sum(XLXN_167));
+   control_adder_subtractor_MUSER_signed_calculator  XLXI_44 (.A(D[1]), 
+                                                             .B(b[0]), 
+                                                             .Carry_in(XLXN_4), 
+                                                             .Mode(XLXN_4), 
+                                                             .RST(RST), 
+                                                             
+         .Carry_out(XLXN_160), 
+                                                             .Sum(XLXN_168));
+   mux2to1_MUSER_signed_calculator  XLXI_45 (.i0(XLXN_238), 
+                                            .i1(XLXN_166), 
+                                            .RST(RST), 
+                                            .sel(Q_DUMMY[1]), 
+                                            .Y(XLXN_203));
+   mux2to1_MUSER_signed_calculator  XLXI_46 (.i0(XLXN_240), 
+                                            .i1(XLXN_167), 
+                                            .RST(RST), 
+                                            .sel(Q_DUMMY[1]), 
+                                            .Y(XLXN_204));
+   mux2to1_MUSER_signed_calculator  XLXI_47 (.i0(D[1]), 
+                                            .i1(XLXN_168), 
+                                            .RST(RST), 
+                                            .sel(Q_DUMMY[1]), 
+                                            .Y(XLXN_205));
+   control_adder_subtractor_MUSER_signed_calculator  XLXI_49 (.A(XLXN_204), 
+                                                             .B(b[2]), 
+                                                             
+         .Carry_in(XLXN_189), 
+                                                             .Mode(XLXN_4), 
+                                                             .RST(RST), 
+                                                             
+         .Carry_out(XLXN_191), 
+                                                             .Sum(XLXN_200));
+   control_adder_subtractor_MUSER_signed_calculator  XLXI_51 (.A(XLXN_203), 
+                                                             .B(b[3]), 
+                                                             
+         .Carry_in(XLXN_191), 
+                                                             .Mode(XLXN_4), 
+                                                             .RST(RST), 
+                                                             
+         .Carry_out(Q_DUMMY[0]), 
+                                                             .Sum(XLXN_199));
+   control_adder_subtractor_MUSER_signed_calculator  XLXI_52 (.A(XLXN_205), 
+                                                             .B(b[1]), 
+                                                             
+         .Carry_in(XLXN_188), 
+                                                             .Mode(XLXN_4), 
+                                                             .RST(RST), 
+                                                             
+         .Carry_out(XLXN_189), 
+                                                             .Sum(XLXN_201));
+   control_adder_subtractor_MUSER_signed_calculator  XLXI_53 (.A(D[0]), 
+                                                             .B(b[0]), 
+                                                             .Carry_in(XLXN_4), 
+                                                             .Mode(XLXN_4), 
+                                                             .RST(RST), 
+                                                             
+         .Carry_out(XLXN_188), 
+                                                             .Sum(XLXN_202));
+   mux2to1_MUSER_signed_calculator  XLXI_54 (.i0(XLXN_203), 
+                                            .i1(XLXN_199), 
+                                            .RST(RST), 
+                                            .sel(Q_DUMMY[0]), 
+                                            .Y(R[3]));
+   mux2to1_MUSER_signed_calculator  XLXI_55 (.i0(XLXN_204), 
+                                            .i1(XLXN_200), 
+                                            .RST(RST), 
+                                            .sel(Q_DUMMY[0]), 
+                                            .Y(R[2]));
+   mux2to1_MUSER_signed_calculator  XLXI_56 (.i0(XLXN_205), 
+                                            .i1(XLXN_201), 
+                                            .RST(RST), 
+                                            .sel(Q_DUMMY[0]), 
+                                            .Y(R[1]));
+   mux2to1_MUSER_signed_calculator  XLXI_57 (.i0(D[0]), 
+                                            .i1(XLXN_202), 
+                                            .RST(RST), 
+                                            .sel(Q_DUMMY[0]), 
+                                            .Y(R[0]));
+endmodule
+`timescale 1ns / 1ps
+
+module compliment_2s4_MUSER_signed_calculator(A, 
+                                              RST, 
+                                              Y);
+
+    input [3:0] A;
+    input RST;
+   output [3:0] Y;
+   
+   wire XLXN_2;
+   wire XLXN_3;
+   wire XLXN_4;
+   wire XLXN_7;
+   wire XLXN_8;
+   wire XLXN_41;
+   wire XLXN_51;
+   wire XLXN_105;
+   
+   INV  XLXI_5 (.I(A[3]), 
+               .O(XLXN_41));
+   INV  XLXI_6 (.I(A[2]), 
+               .O(XLXN_4));
+   INV  XLXI_7 (.I(A[1]), 
+               .O(XLXN_3));
+   INV  XLXI_8 (.I(A[0]), 
+               .O(XLXN_2));
+   half_adder_MUSER_signed_calculator  XLXI_12 (.a(XLXN_4), 
+                                               .b(XLXN_7), 
+                                               .RST(RST), 
+                                               .carry(XLXN_105), 
+                                               .sum(Y[2]));
+   half_adder_MUSER_signed_calculator  XLXI_13 (.a(XLXN_8), 
+                                               .b(XLXN_3), 
+                                               .RST(RST), 
+                                               .carry(XLXN_7), 
+                                               .sum(Y[1]));
+   half_adder_MUSER_signed_calculator  XLXI_14 (.a(XLXN_51), 
+                                               .b(XLXN_2), 
+                                               .RST(RST), 
+                                               .carry(XLXN_8), 
+                                               .sum(Y[0]));
+   half_adder_MUSER_signed_calculator  XLXI_18 (.a(XLXN_41), 
+                                               .b(XLXN_105), 
+                                               .RST(RST), 
+                                               .carry(), 
+                                               .sum(Y[3]));
+   VCC  XLXI_24 (.P(XLXN_51));
+endmodule
+`timescale 1ns / 1ps
+
+module mux2to1_4bits_MUSER_signed_calculator(I0, 
+                                             I1, 
+                                             RST, 
+                                             Sel, 
+                                             Y);
+
+    input [3:0] I0;
+    input [3:0] I1;
+    input RST;
+    input Sel;
+   output [3:0] Y;
+   
+   
+   mux2to1_MUSER_signed_calculator  XLXI_5 (.i0(I0[3]), 
+                                           .i1(I1[3]), 
+                                           .RST(RST), 
+                                           .sel(Sel), 
+                                           .Y(Y[3]));
+   mux2to1_MUSER_signed_calculator  XLXI_6 (.i0(I0[2]), 
+                                           .i1(I1[2]), 
+                                           .RST(RST), 
+                                           .sel(Sel), 
+                                           .Y(Y[2]));
+   mux2to1_MUSER_signed_calculator  XLXI_7 (.i0(I0[1]), 
+                                           .i1(I1[1]), 
+                                           .RST(RST), 
+                                           .sel(Sel), 
+                                           .Y(Y[1]));
+   mux2to1_MUSER_signed_calculator  XLXI_8 (.i0(I0[0]), 
+                                           .i1(I1[0]), 
+                                           .RST(RST), 
+                                           .sel(Sel), 
+                                           .Y(Y[0]));
+endmodule
+`timescale 1ns / 1ps
+
+module division_block_MUSER_signed_calculator(A, 
+                                              B, 
+                                              RST, 
+                                              S0, 
+                                              S1, 
+                                              Q, 
+                                              R, 
+                                              Sign);
+
+    input [3:0] A;
+    input [3:0] B;
+    input RST;
+    input S0;
+    input S1;
+   output [3:0] Q;
+   output [3:0] R;
+   output Sign;
+   
+   wire XLXN_40;
+   wire XLXN_41;
+   wire XLXN_48;
+   wire [3:0] XLXN_106;
+   wire [3:0] XLXN_107;
+   wire Sign_DUMMY;
+   
+   assign Sign = Sign_DUMMY;
+   mux2to1_MUSER_signed_calculator  XLXI_2 (.i0(XLXN_40), 
+                                           .i1(XLXN_41), 
+                                           .RST(RST), 
+                                           .sel(XLXN_48), 
+                                           .Y(Sign_DUMMY));
+   VCC  XLXI_4 (.P(XLXN_41));
+   GND  XLXI_5 (.G(XLXN_40));
+   XOR2  XLXI_6 (.I0(S1), 
+                .I1(S0), 
+                .O(XLXN_48));
+   divider4_MUSER_signed_calculator  XLXI_31 (.b(B[3:0]), 
+                                             .D(A[3:0]), 
+                                             .RST(RST), 
+                                             .Q(XLXN_106[3:0]), 
+                                             .R(R[3:0]));
+   mux2to1_4bits_MUSER_signed_calculator  XLXI_51 (.I0(XLXN_106[3:0]), 
+                                                  .I1(XLXN_107[3:0]), 
+                                                  .RST(RST), 
+                                                  .Sel(Sign_DUMMY), 
+                                                  .Y(Q[3:0]));
+   compliment_2s4_MUSER_signed_calculator  XLXI_52 (.A(XLXN_106[3:0]), 
+                                                   .RST(RST), 
+                                                   .Y(XLXN_107[3:0]));
+endmodule
+`timescale 1ns / 1ps
+
+module or3_8bits_MUSER_signed_calculator(A, 
+                                         B, 
+                                         C, 
+                                         RST, 
+                                         Y);
+
+    input [7:0] A;
+    input [7:0] B;
+    input [7:0] C;
+    input RST;
+   output [7:0] Y;
+   
+   wire XLXN_99;
+   wire XLXN_100;
+   wire XLXN_101;
+   wire XLXN_102;
+   wire XLXN_103;
+   wire XLXN_104;
+   wire XLXN_105;
+   wire XLXN_106;
+   
+   OR3  XLXI_1 (.I0(A[0]), 
+               .I1(B[0]), 
+               .I2(C[0]), 
+               .O(XLXN_99));
+   OR3  XLXI_2 (.I0(A[1]), 
+               .I1(B[1]), 
+               .I2(C[1]), 
+               .O(XLXN_100));
+   OR3  XLXI_3 (.I0(A[2]), 
+               .I1(B[2]), 
+               .I2(C[2]), 
+               .O(XLXN_101));
+   OR3  XLXI_4 (.I0(A[3]), 
+               .I1(B[3]), 
+               .I2(C[3]), 
+               .O(XLXN_102));
+   OR3  XLXI_5 (.I0(A[4]), 
+               .I1(B[4]), 
+               .I2(C[4]), 
+               .O(XLXN_103));
+   OR3  XLXI_6 (.I0(A[5]), 
+               .I1(B[5]), 
+               .I2(C[5]), 
+               .O(XLXN_104));
+   OR3  XLXI_7 (.I0(A[6]), 
+               .I1(B[6]), 
+               .I2(C[6]), 
+               .O(XLXN_105));
+   OR3  XLXI_8 (.I0(A[7]), 
+               .I1(B[7]), 
+               .I2(C[7]), 
+               .O(XLXN_106));
+   AND2B1  XLXI_19 (.I0(RST), 
+                   .I1(XLXN_99), 
+                   .O(Y[0]));
+   AND2B1  XLXI_20 (.I0(RST), 
+                   .I1(XLXN_100), 
+                   .O(Y[1]));
+   AND2B1  XLXI_21 (.I0(RST), 
+                   .I1(XLXN_101), 
+                   .O(Y[2]));
+   AND2B1  XLXI_22 (.I0(RST), 
+                   .I1(XLXN_102), 
+                   .O(Y[3]));
+   AND2B1  XLXI_23 (.I0(RST), 
+                   .I1(XLXN_103), 
+                   .O(Y[4]));
+   AND2B1  XLXI_25 (.I0(RST), 
+                   .I1(XLXN_104), 
+                   .O(Y[5]));
+   AND2B1  XLXI_26 (.I0(RST), 
+                   .I1(XLXN_105), 
+                   .O(Y[6]));
+   AND2B1  XLXI_27 (.I0(RST), 
+                   .I1(XLXN_106), 
+                   .O(Y[7]));
+endmodule
+`timescale 1ns / 1ps
+
+module decoder2to4_MUSER_signed_calculator(RST, 
+                                           X, 
+                                           Y, 
+                                           D0, 
+                                           D1, 
+                                           D2, 
+                                           D3);
+
+    input RST;
+    input X;
+    input Y;
+   output D0;
+   output D1;
+   output D2;
+   output D3;
+   
+   wire XLXN_4;
+   wire XLXN_5;
+   wire XLXN_24;
+   wire XLXN_25;
+   wire XLXN_26;
+   wire XLXN_27;
+   wire XLXN_32;
+   
+   INV  XLXI_1 (.I(X), 
+               .O(XLXN_5));
+   INV  XLXI_2 (.I(Y), 
+               .O(XLXN_4));
+   AND2  XLXI_3 (.I0(XLXN_4), 
+                .I1(XLXN_5), 
+                .O(XLXN_27));
+   AND2  XLXI_4 (.I0(Y), 
+                .I1(XLXN_5), 
+                .O(XLXN_26));
+   AND2  XLXI_5 (.I0(XLXN_4), 
+                .I1(X), 
+                .O(XLXN_25));
+   AND2  XLXI_6 (.I0(Y), 
+                .I1(X), 
+                .O(XLXN_24));
+   AND2  XLXI_7 (.I0(XLXN_27), 
+                .I1(XLXN_32), 
+                .O(D0));
+   AND2  XLXI_8 (.I0(XLXN_26), 
+                .I1(XLXN_32), 
+                .O(D1));
+   AND2  XLXI_9 (.I0(XLXN_25), 
+                .I1(XLXN_32), 
+                .O(D2));
+   AND2  XLXI_10 (.I0(XLXN_24), 
+                 .I1(XLXN_32), 
+                 .O(D3));
+   INV  XLXI_11 (.I(RST), 
+                .O(XLXN_32));
+endmodule
+`timescale 1ns / 1ps
+
+module mux2to1_8bits_MUSER_signed_calculator(I0, 
+                                             I1, 
+                                             RST, 
+                                             Sel, 
+                                             Y);
+
+    input [7:0] I0;
+    input [7:0] I1;
+    input RST;
+    input Sel;
+   output [7:0] Y;
+   
+   
+   mux2to1_4bits_MUSER_signed_calculator  XLXI_9 (.I0(I0[3:0]), 
+                                                 .I1(I1[3:0]), 
+                                                 .RST(RST), 
+                                                 .Sel(Sel), 
+                                                 .Y(Y[3:0]));
+   mux2to1_4bits_MUSER_signed_calculator  XLXI_10 (.I0(I0[7:4]), 
+                                                  .I1(I1[7:4]), 
+                                                  .RST(RST), 
+                                                  .Sel(Sel), 
+                                                  .Y(Y[7:4]));
+endmodule
+`timescale 1ns / 1ps
+
+module complement_2s8_MUSER_signed_calculator(A, 
+                                              RST, 
+                                              Y);
+
+    input [7:0] A;
+    input RST;
+   output [7:0] Y;
+   
+   wire XLXN_12;
+   wire XLXN_13;
+   wire XLXN_14;
+   wire XLXN_18;
+   wire XLXN_19;
+   wire XLXN_21;
+   wire XLXN_22;
+   wire XLXN_41;
+   wire XLXN_42;
+   wire XLXN_43;
+   wire XLXN_44;
+   wire XLXN_46;
+   wire XLXN_47;
+   wire XLXN_51;
+   wire XLXN_105;
+   wire XLXN_106;
+   
+   INV  XLXI_5 (.I(A[7]), 
+               .O(XLXN_46));
+   INV  XLXI_6 (.I(A[6]), 
+               .O(XLXN_44));
+   INV  XLXI_8 (.I(A[5]), 
+               .O(XLXN_43));
+   INV  XLXI_9 (.I(A[4]), 
+               .O(XLXN_42));
+   INV  XLXI_10 (.I(A[3]), 
+                .O(XLXN_41));
+   INV  XLXI_11 (.I(A[2]), 
+                .O(XLXN_22));
+   INV  XLXI_12 (.I(A[1]), 
+                .O(XLXN_21));
+   INV  XLXI_13 (.I(A[0]), 
+                .O(XLXN_12));
+   half_adder_MUSER_signed_calculator  XLXI_15 (.a(XLXN_51), 
+                                               .b(XLXN_12), 
+                                               .RST(RST), 
+                                               .carry(XLXN_13), 
+                                               .sum(Y[0]));
+   half_adder_MUSER_signed_calculator  XLXI_16 (.a(XLXN_13), 
+                                               .b(XLXN_21), 
+                                               .RST(RST), 
+                                               .carry(XLXN_14), 
+                                               .sum(Y[1]));
+   half_adder_MUSER_signed_calculator  XLXI_17 (.a(XLXN_22), 
+                                               .b(XLXN_14), 
+                                               .RST(RST), 
+                                               .carry(XLXN_105), 
+                                               .sum(Y[2]));
+   half_adder_MUSER_signed_calculator  XLXI_18 (.a(XLXN_41), 
+                                               .b(XLXN_105), 
+                                               .RST(RST), 
+                                               .carry(XLXN_106), 
+                                               .sum(Y[3]));
+   half_adder_MUSER_signed_calculator  XLXI_19 (.a(XLXN_42), 
+                                               .b(XLXN_106), 
+                                               .RST(RST), 
+                                               .carry(XLXN_18), 
+                                               .sum(Y[4]));
+   half_adder_MUSER_signed_calculator  XLXI_20 (.a(XLXN_43), 
+                                               .b(XLXN_18), 
+                                               .RST(RST), 
+                                               .carry(XLXN_19), 
+                                               .sum(Y[5]));
+   half_adder_MUSER_signed_calculator  XLXI_21 (.a(XLXN_44), 
+                                               .b(XLXN_19), 
+                                               .RST(RST), 
+                                               .carry(XLXN_47), 
+                                               .sum(Y[6]));
+   half_adder_MUSER_signed_calculator  XLXI_23 (.a(XLXN_46), 
+                                               .b(XLXN_47), 
+                                               .RST(RST), 
+                                               .carry(), 
+                                               .sum(Y[7]));
+   VCC  XLXI_24 (.P(XLXN_51));
+endmodule
+`timescale 1ns / 1ps
+
+module multiplier4_MUSER_signed_calculator(A, 
+                                           B, 
+                                           RST, 
+                                           Product);
+
+    input [3:0] A;
+    input [3:0] B;
+    input RST;
+   output [7:0] Product;
+   
+   wire XLXN_34;
+   wire XLXN_35;
+   wire XLXN_36;
+   wire XLXN_37;
+   wire XLXN_38;
+   wire XLXN_39;
+   wire XLXN_40;
+   wire XLXN_41;
+   wire XLXN_42;
+   wire XLXN_43;
+   wire XLXN_66;
+   wire XLXN_67;
+   wire XLXN_68;
+   wire XLXN_69;
+   wire XLXN_70;
+   wire XLXN_74;
+   wire XLXN_76;
+   wire XLXN_78;
+   wire XLXN_80;
+   wire XLXN_136;
+   wire XLXN_138;
+   wire XLXN_139;
+   wire XLXN_140;
+   wire XLXN_141;
+   wire XLXN_142;
+   wire XLXN_143;
+   wire XLXN_144;
+   wire XLXN_145;
+   wire XLXN_146;
+   wire XLXN_149;
+   wire XLXN_151;
+   wire XLXN_159;
+   wire XLXN_168;
+   
+   AND2  XLXI_1 (.I0(A[0]), 
+                .I1(B[0]), 
+                .O(XLXN_159));
+   AND2  XLXI_3 (.I0(A[1]), 
+                .I1(B[0]), 
+                .O(XLXN_35));
+   AND2  XLXI_4 (.I0(A[2]), 
+                .I1(B[0]), 
+                .O(XLXN_39));
+   AND2  XLXI_5 (.I0(A[3]), 
+                .I1(B[0]), 
+                .O(XLXN_41));
+   AND2  XLXI_6 (.I0(A[0]), 
+                .I1(B[1]), 
+                .O(XLXN_34));
+   AND2  XLXI_7 (.I0(A[1]), 
+                .I1(B[1]), 
+                .O(XLXN_38));
+   AND2  XLXI_8 (.I0(A[2]), 
+                .I1(B[1]), 
+                .O(XLXN_40));
+   AND2  XLXI_9 (.I0(A[3]), 
+                .I1(B[1]), 
+                .O(XLXN_42));
+   half_adder_MUSER_signed_calculator  XLXI_10 (.a(XLXN_34), 
+                                               .b(XLXN_35), 
+                                               .RST(RST), 
+                                               .carry(XLXN_36), 
+                                               .sum(Product[1]));
+   full_adder_MUSER_signed_calculator  XLXI_11 (.a(XLXN_40), 
+                                               .b(XLXN_41), 
+                                               .c_in(XLXN_37), 
+                                               .RST(RST), 
+                                               .carry(XLXN_43), 
+                                               .sum(XLXN_69));
+   full_adder_MUSER_signed_calculator  XLXI_14 (.a(XLXN_38), 
+                                               .b(XLXN_39), 
+                                               .c_in(XLXN_36), 
+                                               .RST(RST), 
+                                               .carry(XLXN_37), 
+                                               .sum(XLXN_67));
+   half_adder_MUSER_signed_calculator  XLXI_16 (.a(XLXN_43), 
+                                               .b(XLXN_42), 
+                                               .RST(RST), 
+                                               .carry(XLXN_80), 
+                                               .sum(XLXN_74));
+   AND2  XLXI_17 (.I0(A[0]), 
+                 .I1(B[2]), 
+                 .O(XLXN_66));
+   AND2  XLXI_18 (.I0(A[1]), 
+                 .I1(B[2]), 
+                 .O(XLXN_68));
+   AND2  XLXI_19 (.I0(A[2]), 
+                 .I1(B[2]), 
+                 .O(XLXN_70));
+   AND2  XLXI_20 (.I0(A[3]), 
+                 .I1(B[2]), 
+                 .O(XLXN_76));
+   half_adder_MUSER_signed_calculator  XLXI_21 (.a(XLXN_66), 
+                                               .b(XLXN_67), 
+                                               .RST(RST), 
+                                               .carry(XLXN_168), 
+                                               .sum(Product[2]));
+   full_adder_MUSER_signed_calculator  XLXI_22 (.a(XLXN_68), 
+                                               .b(XLXN_69), 
+                                               .c_in(XLXN_168), 
+                                               .RST(RST), 
+                                               .carry(XLXN_78), 
+                                               .sum(XLXN_138));
+   full_adder_MUSER_signed_calculator  XLXI_23 (.a(XLXN_70), 
+                                               .b(XLXN_74), 
+                                               .c_in(XLXN_78), 
+                                               .RST(RST), 
+                                               .carry(XLXN_141), 
+                                               .sum(XLXN_140));
+   full_adder_MUSER_signed_calculator  XLXI_24 (.a(XLXN_76), 
+                                               .b(XLXN_80), 
+                                               .c_in(XLXN_141), 
+                                               .RST(RST), 
+                                               .carry(XLXN_151), 
+                                               .sum(XLXN_144));
+   AND2  XLXI_25 (.I0(A[0]), 
+                 .I1(B[3]), 
+                 .O(XLXN_136));
+   AND2  XLXI_26 (.I0(A[1]), 
+                 .I1(B[3]), 
+                 .O(XLXN_139));
+   AND2  XLXI_27 (.I0(A[2]), 
+                 .I1(B[3]), 
+                 .O(XLXN_143));
+   half_adder_MUSER_signed_calculator  XLXI_52 (.a(XLXN_136), 
+                                               .b(XLXN_138), 
+                                               .RST(RST), 
+                                               .carry(XLXN_142), 
+                                               .sum(Product[3]));
+   full_adder_MUSER_signed_calculator  XLXI_53 (.a(XLXN_139), 
+                                               .b(XLXN_140), 
+                                               .c_in(XLXN_142), 
+                                               .RST(RST), 
+                                               .carry(XLXN_145), 
+                                               .sum(Product[4]));
+   full_adder_MUSER_signed_calculator  XLXI_54 (.a(XLXN_143), 
+                                               .b(XLXN_144), 
+                                               .c_in(XLXN_145), 
+                                               .RST(RST), 
+                                               .carry(XLXN_149), 
+                                               .sum(Product[5]));
+   full_adder_MUSER_signed_calculator  XLXI_55 (.a(XLXN_146), 
+                                               .b(XLXN_151), 
+                                               .c_in(XLXN_149), 
+                                               .RST(RST), 
+                                               .carry(Product[7]), 
+                                               .sum(Product[6]));
+   AND2  XLXI_59 (.I0(A[3]), 
+                 .I1(B[3]), 
+                 .O(XLXN_146));
+   AND2B1  XLXI_62 (.I0(RST), 
+                   .I1(XLXN_159), 
+                   .O(Product[0]));
+endmodule
+`timescale 1ns / 1ps
+
+module multiplication_block_MUSER_signed_calculator(A, 
+                                                    B, 
+                                                    RST, 
+                                                    S0, 
+                                                    S1, 
+                                                    P, 
+                                                    Sign);
+
+    input [3:0] A;
+    input [3:0] B;
+    input RST;
+    input S0;
+    input S1;
+   output [7:0] P;
+   output Sign;
+   
+   wire [7:0] Product;
+   wire [7:0] Product_bar;
+   wire XLXN_40;
+   wire XLXN_41;
+   wire XLXN_48;
+   wire Sign_DUMMY;
+   
+   assign Sign = Sign_DUMMY;
+   mux2to1_MUSER_signed_calculator  XLXI_2 (.i0(XLXN_40), 
+                                           .i1(XLXN_41), 
+                                           .RST(RST), 
+                                           .sel(XLXN_48), 
+                                           .Y(Sign_DUMMY));
+   VCC  XLXI_4 (.P(XLXN_41));
+   GND  XLXI_5 (.G(XLXN_40));
+   XOR2  XLXI_6 (.I0(S1), 
+                .I1(S0), 
+                .O(XLXN_48));
+   multiplier4_MUSER_signed_calculator  XLXI_147 (.A(A[3:0]), 
+                                                 .B(B[3:0]), 
+                                                 .RST(RST), 
+                                                 .Product(Product[7:0]));
+   complement_2s8_MUSER_signed_calculator  XLXI_157 (.A(Product[7:0]), 
+                                                    .RST(RST), 
+                                                    .Y(Product_bar[7:0]));
+   mux2to1_8bits_MUSER_signed_calculator  XLXI_158 (.I0(Product[7:0]), 
+                                                   .I1(Product_bar[7:0]), 
+                                                   .RST(RST), 
+                                                   .Sel(Sign_DUMMY), 
+                                                   .Y(P[7:0]));
+endmodule
+`timescale 1ns / 1ps
+
+module full_adder4_MUSER_signed_calculator(A, 
+                                           B, 
+                                           Carry_in, 
+                                           RST, 
+                                           carry_out, 
+                                           Sum);
+
+    input [3:0] A;
+    input [3:0] B;
+    input Carry_in;
+    input RST;
+   output carry_out;
+   output [3:0] Sum;
+   
+   wire XLXN_1;
+   wire XLXN_2;
+   wire XLXN_3;
+   
+   full_adder_MUSER_signed_calculator  XLXI_5 (.a(A[0]), 
+                                              .b(B[0]), 
+                                              .c_in(Carry_in), 
+                                              .RST(RST), 
+                                              .carry(XLXN_1), 
+                                              .sum(Sum[0]));
+   full_adder_MUSER_signed_calculator  XLXI_6 (.a(A[1]), 
+                                              .b(B[1]), 
+                                              .c_in(XLXN_1), 
+                                              .RST(RST), 
+                                              .carry(XLXN_2), 
+                                              .sum(Sum[1]));
+   full_adder_MUSER_signed_calculator  XLXI_7 (.a(A[2]), 
+                                              .b(B[2]), 
+                                              .c_in(XLXN_2), 
+                                              .RST(RST), 
+                                              .carry(XLXN_3), 
+                                              .sum(Sum[2]));
+   full_adder_MUSER_signed_calculator  XLXI_8 (.a(A[3]), 
+                                              .b(B[3]), 
+                                              .c_in(XLXN_3), 
+                                              .RST(RST), 
+                                              .carry(carry_out), 
+                                              .sum(Sum[3]));
+endmodule
+`timescale 1ns / 1ps
+
+module full_adder8_MUSER_signed_calculator(A, 
+                                           B, 
+                                           Carry_in, 
+                                           RST, 
+                                           Carry_out, 
+                                           Sum);
+
+    input [7:0] A;
+    input [7:0] B;
+    input Carry_in;
+    input RST;
+   output Carry_out;
+   output [7:0] Sum;
+   
+   wire XLXN_105;
+   
+   full_adder4_MUSER_signed_calculator  XLXI_48 (.A(A[3:0]), 
+                                                .B(B[3:0]), 
+                                                .Carry_in(Carry_in), 
+                                                .RST(RST), 
+                                                .carry_out(XLXN_105), 
+                                                .Sum(Sum[3:0]));
+   full_adder4_MUSER_signed_calculator  XLXI_49 (.A(A[7:4]), 
+                                                .B(B[7:4]), 
+                                                .Carry_in(XLXN_105), 
+                                                .RST(RST), 
+                                                .carry_out(Carry_out), 
+                                                .Sum(Sum[7:4]));
+endmodule
+`timescale 1ns / 1ps
+
+module addition_subtraction_block_MUSER_signed_calculator(A, 
+                                                          B, 
+                                                          RST, 
+                                                          Sub, 
+                                                          S0, 
+                                                          S1, 
+                                                          Sign, 
+                                                          Y);
+
+    input [3:0] A;
+    input [3:0] B;
+    input RST;
+    input Sub;
+    input S0;
+    input S1;
+   output Sign;
+   output [7:0] Y;
+   
+   wire [7:0] C;
+   wire [7:0] C_bar;
+   wire [7:0] D;
+   wire [7:0] D_bar;
+   wire [7:0] XLXN_58;
+   wire XLXN_61;
+   wire [7:0] XLXN_117;
+   wire [7:0] XLXN_122;
+   wire [7:0] XLXN_141;
+   wire [7:0] Y_DUMMY;
+   
+   assign Y[7:0] = Y_DUMMY[7:0];
+   complement_2s8_MUSER_signed_calculator  XLXI_26 (.A(D[7:0]), 
+                                                   .RST(RST), 
+                                                   .Y(D_bar[7:0]));
+   BUF  XLXI_27 (.I(B[0]), 
+                .O(D[0]));
+   BUF  XLXI_28 (.I(B[1]), 
+                .O(D[1]));
+   BUF  XLXI_29 (.I(B[2]), 
+                .O(D[2]));
+   BUF  XLXI_30 (.I(B[3]), 
+                .O(D[3]));
+   GND  XLXI_41 (.G(D[4]));
+   GND  XLXI_42 (.G(D[5]));
+   GND  XLXI_43 (.G(D[6]));
+   GND  XLXI_44 (.G(D[7]));
+   mux2to1_8bits_MUSER_signed_calculator  XLXI_45 (.I0(C[7:0]), 
+                                                  .I1(C_bar[7:0]), 
+                                                  .RST(RST), 
+                                                  .Sel(S0), 
+                                                  .Y(XLXN_58[7:0]));
+   mux2to1_8bits_MUSER_signed_calculator  XLXI_46 (.I0(D[7:0]), 
+                                                  .I1(D_bar[7:0]), 
+                                                  .RST(RST), 
+                                                  .Sel(S1), 
+                                                  .Y(XLXN_117[7:0]));
+   full_adder8_MUSER_signed_calculator  XLXI_48 (.A(XLXN_58[7:0]), 
+                                                .B(XLXN_141[7:0]), 
+                                                .Carry_in(XLXN_61), 
+                                                .RST(RST), 
+                                                .Carry_out(), 
+                                                .Sum(Y_DUMMY[7:0]));
+   GND  XLXI_50 (.G(XLXN_61));
+   complement_2s8_MUSER_signed_calculator  XLXI_80 (.A(XLXN_117[7:0]), 
+                                                   .RST(RST), 
+                                                   .Y(XLXN_122[7:0]));
+   mux2to1_8bits_MUSER_signed_calculator  XLXI_81 (.I0(XLXN_117[7:0]), 
+                                                  .I1(XLXN_122[7:0]), 
+                                                  .RST(RST), 
+                                                  .Sel(Sub), 
+                                                  .Y(XLXN_141[7:0]));
+   complement_2s8_MUSER_signed_calculator  XLXI_83 (.A(C[7:0]), 
+                                                   .RST(RST), 
+                                                   .Y(C_bar[7:0]));
+   BUF  XLXI_84 (.I(A[1]), 
+                .O(C[1]));
+   BUF  XLXI_85 (.I(A[2]), 
+                .O(C[2]));
+   GND  XLXI_87 (.G(C[4]));
+   GND  XLXI_88 (.G(C[5]));
+   GND  XLXI_89 (.G(C[6]));
+   GND  XLXI_90 (.G(C[7]));
+   BUF  XLXI_91 (.I(A[0]), 
+                .O(C[0]));
+   BUF  XLXI_93 (.I(A[3]), 
+                .O(C[3]));
+   BUF  XLXI_94 (.I(Y_DUMMY[7]), 
+                .O(Sign));
+endmodule
+`timescale 1ns / 1ps
+
+module signed_calculator(A, 
+                         B, 
+                         M0, 
+                         M1, 
+                         RST, 
+                         S0, 
+                         S1, 
+                         Sign, 
+                         Y);
+
+    input [3:0] A;
+    input [3:0] B;
+    input M0;
+    input M1;
+    input RST;
+    input S0;
+    input S1;
+   output Sign;
+   output [7:0] Y;
+   
+   wire [7:0] QR;
+   wire XLXN_86;
+   wire XLXN_88;
+   wire XLXN_89;
+   wire [7:0] XLXN_119;
+   wire [7:0] XLXN_120;
+   wire XLXN_129;
+   wire XLXN_131;
+   wire XLXN_133;
+   wire XLXN_134;
+   wire XLXN_154;
+   wire XLXN_155;
+   wire XLXN_156;
+   wire XLXN_163;
+   wire XLXN_164;
+   
+   addition_subtraction_block_MUSER_signed_calculator  XLXI_13 (.A(A[3:0]), 
+                                                               .B(B[3:0]), 
+                                                               .RST(XLXN_154), 
+                                                               .Sub(XLXN_163), 
+                                                               .S0(S0), 
+                                                               .S1(S1), 
+                                                               .Sign(XLXN_131), 
+                                                               
+         .Y(XLXN_119[7:0]));
+   division_block_MUSER_signed_calculator  XLXI_14 (.A(A[3:0]), 
+                                                   .B(B[3:0]), 
+                                                   .RST(XLXN_156), 
+                                                   .S0(S0), 
+                                                   .S1(S1), 
+                                                   .Q(QR[7:4]), 
+                                                   .R(QR[3:0]), 
+                                                   .Sign(XLXN_134));
+   multiplication_block_MUSER_signed_calculator  XLXI_15 (.A(A[3:0]), 
+                                                         .B(B[3:0]), 
+                                                         .RST(XLXN_155), 
+                                                         .S0(S0), 
+                                                         .S1(S1), 
+                                                         .P(XLXN_120[7:0]), 
+                                                         .Sign(XLXN_133));
+   decoder2to4_MUSER_signed_calculator  XLXI_17 (.RST(XLXN_129), 
+                                                .X(M1), 
+                                                .Y(M0), 
+                                                .D0(XLXN_86), 
+                                                .D1(XLXN_163), 
+                                                .D2(XLXN_88), 
+                                                .D3(XLXN_89));
+   or3_8bits_MUSER_signed_calculator  XLXI_26 (.A(QR[7:0]), 
+                                              .B(XLXN_120[7:0]), 
+                                              .C(XLXN_119[7:0]), 
+                                              .RST(RST), 
+                                              .Y(Y[7:0]));
+   GND  XLXI_27 (.G(XLXN_129));
+   OR3  XLXI_28 (.I0(XLXN_131), 
+                .I1(XLXN_133), 
+                .I2(XLXN_134), 
+                .O(Sign));
+   INV  XLXI_41 (.I(XLXN_164), 
+                .O(XLXN_154));
+   INV  XLXI_42 (.I(XLXN_88), 
+                .O(XLXN_155));
+   INV  XLXI_43 (.I(XLXN_89), 
+                .O(XLXN_156));
+   OR2  XLXI_46 (.I0(XLXN_163), 
+                .I1(XLXN_86), 
+                .O(XLXN_164));
+endmodule

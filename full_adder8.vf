@@ -1,0 +1,163 @@
+////////////////////////////////////////////////////////////////////////////////
+// Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+////////////////////////////////////////////////////////////////////////////////
+//   ____  ____ 
+//  /   /\/   / 
+// /___/  \  /    Vendor: Xilinx 
+// \   \   \/     Version : 14.7
+//  \   \         Application : sch2hdl
+//  /   /         Filename : full_adder8.vf
+// /___/   /\     Timestamp : 11/24/2021 13:07:02
+// \   \  /  \ 
+//  \___\/\___\ 
+//
+//Command: sch2hdl -intstyle ise -family artix7 -verilog /home/dell-pc/Documents/pinE/signCalculator/full_adder8.vf -w /home/dell-pc/Documents/pinE/signCalculator/full_adder8.sch
+//Design Name: full_adder8
+//Device: artix7
+//Purpose:
+//    This verilog netlist is translated from an ECS schematic.It can be 
+//    synthesized and simulated, but it should not be modified. 
+//
+`timescale 1ns / 1ps
+
+module half_adder_MUSER_full_adder8(a, 
+                                    b, 
+                                    RST, 
+                                    carry, 
+                                    sum);
+
+    input a;
+    input b;
+    input RST;
+   output carry;
+   output sum;
+   
+   wire XLXN_2;
+   wire XLXN_9;
+   wire XLXN_10;
+   
+   AND2  XLXI_1 (.I0(b), 
+                .I1(a), 
+                .O(XLXN_9));
+   XOR2  XLXI_2 (.I0(b), 
+                .I1(a), 
+                .O(XLXN_10));
+   AND2  XLXI_3 (.I0(XLXN_2), 
+                .I1(XLXN_9), 
+                .O(carry));
+   AND2  XLXI_4 (.I0(XLXN_2), 
+                .I1(XLXN_10), 
+                .O(sum));
+   INV  XLXI_5 (.I(RST), 
+               .O(XLXN_2));
+endmodule
+`timescale 1ns / 1ps
+
+module full_adder_MUSER_full_adder8(a, 
+                                    b, 
+                                    c_in, 
+                                    RST, 
+                                    carry, 
+                                    sum);
+
+    input a;
+    input b;
+    input c_in;
+    input RST;
+   output carry;
+   output sum;
+   
+   wire XLXN_1;
+   wire XLXN_5;
+   wire XLXN_6;
+   
+   OR2  XLXI_3 (.I0(XLXN_6), 
+               .I1(XLXN_5), 
+               .O(carry));
+   half_adder_MUSER_full_adder8  XLXI_4 (.a(a), 
+                                        .b(b), 
+                                        .RST(RST), 
+                                        .carry(XLXN_5), 
+                                        .sum(XLXN_1));
+   half_adder_MUSER_full_adder8  XLXI_5 (.a(XLXN_1), 
+                                        .b(c_in), 
+                                        .RST(RST), 
+                                        .carry(XLXN_6), 
+                                        .sum(sum));
+endmodule
+`timescale 1ns / 1ps
+
+module full_adder4_MUSER_full_adder8(A, 
+                                     B, 
+                                     Carry_in, 
+                                     RST, 
+                                     carry_out, 
+                                     Sum);
+
+    input [3:0] A;
+    input [3:0] B;
+    input Carry_in;
+    input RST;
+   output carry_out;
+   output [3:0] Sum;
+   
+   wire XLXN_1;
+   wire XLXN_2;
+   wire XLXN_3;
+   
+   full_adder_MUSER_full_adder8  XLXI_5 (.a(A[0]), 
+                                        .b(B[0]), 
+                                        .c_in(Carry_in), 
+                                        .RST(RST), 
+                                        .carry(XLXN_1), 
+                                        .sum(Sum[0]));
+   full_adder_MUSER_full_adder8  XLXI_6 (.a(A[1]), 
+                                        .b(B[1]), 
+                                        .c_in(XLXN_1), 
+                                        .RST(RST), 
+                                        .carry(XLXN_2), 
+                                        .sum(Sum[1]));
+   full_adder_MUSER_full_adder8  XLXI_7 (.a(A[2]), 
+                                        .b(B[2]), 
+                                        .c_in(XLXN_2), 
+                                        .RST(RST), 
+                                        .carry(XLXN_3), 
+                                        .sum(Sum[2]));
+   full_adder_MUSER_full_adder8  XLXI_8 (.a(A[3]), 
+                                        .b(B[3]), 
+                                        .c_in(XLXN_3), 
+                                        .RST(RST), 
+                                        .carry(carry_out), 
+                                        .sum(Sum[3]));
+endmodule
+`timescale 1ns / 1ps
+
+module full_adder8(A, 
+                   B, 
+                   Carry_in, 
+                   RST, 
+                   Carry_out, 
+                   Sum);
+
+    input [7:0] A;
+    input [7:0] B;
+    input Carry_in;
+    input RST;
+   output Carry_out;
+   output [7:0] Sum;
+   
+   wire XLXN_105;
+   
+   full_adder4_MUSER_full_adder8  XLXI_48 (.A(A[3:0]), 
+                                          .B(B[3:0]), 
+                                          .Carry_in(Carry_in), 
+                                          .RST(RST), 
+                                          .carry_out(XLXN_105), 
+                                          .Sum(Sum[3:0]));
+   full_adder4_MUSER_full_adder8  XLXI_49 (.A(A[7:4]), 
+                                          .B(B[7:4]), 
+                                          .Carry_in(XLXN_105), 
+                                          .RST(RST), 
+                                          .carry_out(Carry_out), 
+                                          .Sum(Sum[7:4]));
+endmodule

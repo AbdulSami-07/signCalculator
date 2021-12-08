@@ -1,0 +1,77 @@
+////////////////////////////////////////////////////////////////////////////////
+// Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+////////////////////////////////////////////////////////////////////////////////
+//   ____  ____ 
+//  /   /\/   / 
+// /___/  \  /    Vendor: Xilinx 
+// \   \   \/     Version : 14.7
+//  \   \         Application : sch2hdl
+//  /   /         Filename : decoder2to4.vf
+// /___/   /\     Timestamp : 11/24/2021 18:31:28
+// \   \  /  \ 
+//  \___\/\___\ 
+//
+//Command: sch2hdl -intstyle ise -family artix7 -verilog /home/dell-pc/Documents/pinE/signCalculator/decoder2to4.vf -w /home/dell-pc/Documents/pinE/signCalculator/decoder2to4.sch
+//Design Name: decoder2to4
+//Device: artix7
+//Purpose:
+//    This verilog netlist is translated from an ECS schematic.It can be 
+//    synthesized and simulated, but it should not be modified. 
+//
+`timescale 1ns / 1ps
+
+module decoder2to4(RST, 
+                   X, 
+                   Y, 
+                   D0, 
+                   D1, 
+                   D2, 
+                   D3);
+
+    input RST;
+    input X;
+    input Y;
+   output D0;
+   output D1;
+   output D2;
+   output D3;
+   
+   wire XLXN_4;
+   wire XLXN_5;
+   wire XLXN_24;
+   wire XLXN_25;
+   wire XLXN_26;
+   wire XLXN_27;
+   wire XLXN_32;
+   
+   INV  XLXI_1 (.I(X), 
+               .O(XLXN_5));
+   INV  XLXI_2 (.I(Y), 
+               .O(XLXN_4));
+   AND2  XLXI_3 (.I0(XLXN_4), 
+                .I1(XLXN_5), 
+                .O(XLXN_27));
+   AND2  XLXI_4 (.I0(Y), 
+                .I1(XLXN_5), 
+                .O(XLXN_26));
+   AND2  XLXI_5 (.I0(XLXN_4), 
+                .I1(X), 
+                .O(XLXN_25));
+   AND2  XLXI_6 (.I0(Y), 
+                .I1(X), 
+                .O(XLXN_24));
+   AND2  XLXI_7 (.I0(XLXN_27), 
+                .I1(XLXN_32), 
+                .O(D0));
+   AND2  XLXI_8 (.I0(XLXN_26), 
+                .I1(XLXN_32), 
+                .O(D1));
+   AND2  XLXI_9 (.I0(XLXN_25), 
+                .I1(XLXN_32), 
+                .O(D2));
+   AND2  XLXI_10 (.I0(XLXN_24), 
+                 .I1(XLXN_32), 
+                 .O(D3));
+   INV  XLXI_11 (.I(RST), 
+                .O(XLXN_32));
+endmodule

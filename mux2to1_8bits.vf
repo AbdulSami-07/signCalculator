@@ -1,0 +1,119 @@
+////////////////////////////////////////////////////////////////////////////////
+// Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+////////////////////////////////////////////////////////////////////////////////
+//   ____  ____ 
+//  /   /\/   / 
+// /___/  \  /    Vendor: Xilinx 
+// \   \   \/     Version : 14.7
+//  \   \         Application : sch2hdl
+//  /   /         Filename : mux2to1_8bits.vf
+// /___/   /\     Timestamp : 11/24/2021 14:47:23
+// \   \  /  \ 
+//  \___\/\___\ 
+//
+//Command: sch2hdl -intstyle ise -family artix7 -verilog /home/dell-pc/Documents/pinE/signCalculator/mux2to1_8bits.vf -w /home/dell-pc/Documents/pinE/signCalculator/mux2to1_8bits.sch
+//Design Name: mux2to1_8bits
+//Device: artix7
+//Purpose:
+//    This verilog netlist is translated from an ECS schematic.It can be 
+//    synthesized and simulated, but it should not be modified. 
+//
+`timescale 1ns / 1ps
+
+module mux2to1_MUSER_mux2to1_8bits(i0, 
+                                   i1, 
+                                   RST, 
+                                   sel, 
+                                   Y);
+
+    input i0;
+    input i1;
+    input RST;
+    input sel;
+   output Y;
+   
+   wire XLXN_1;
+   wire XLXN_2;
+   wire XLXN_4;
+   wire XLXN_6;
+   wire XLXN_7;
+   
+   AND2  XLXI_1 (.I0(XLXN_1), 
+                .I1(i0), 
+                .O(XLXN_2));
+   AND2  XLXI_2 (.I0(sel), 
+                .I1(i1), 
+                .O(XLXN_4));
+   INV  XLXI_3 (.I(sel), 
+               .O(XLXN_1));
+   OR2  XLXI_4 (.I0(XLXN_4), 
+               .I1(XLXN_2), 
+               .O(XLXN_6));
+   AND2  XLXI_5 (.I0(XLXN_7), 
+                .I1(XLXN_6), 
+                .O(Y));
+   INV  XLXI_7 (.I(RST), 
+               .O(XLXN_7));
+endmodule
+`timescale 1ns / 1ps
+
+module mux2to1_4bits_MUSER_mux2to1_8bits(I0, 
+                                         I1, 
+                                         RST, 
+                                         Sel, 
+                                         Y);
+
+    input [3:0] I0;
+    input [3:0] I1;
+    input RST;
+    input Sel;
+   output [3:0] Y;
+   
+   
+   mux2to1_MUSER_mux2to1_8bits  XLXI_5 (.i0(I0[3]), 
+                                       .i1(I1[3]), 
+                                       .RST(RST), 
+                                       .sel(Sel), 
+                                       .Y(Y[3]));
+   mux2to1_MUSER_mux2to1_8bits  XLXI_6 (.i0(I0[2]), 
+                                       .i1(I1[2]), 
+                                       .RST(RST), 
+                                       .sel(Sel), 
+                                       .Y(Y[2]));
+   mux2to1_MUSER_mux2to1_8bits  XLXI_7 (.i0(I0[1]), 
+                                       .i1(I1[1]), 
+                                       .RST(RST), 
+                                       .sel(Sel), 
+                                       .Y(Y[1]));
+   mux2to1_MUSER_mux2to1_8bits  XLXI_8 (.i0(I0[0]), 
+                                       .i1(I1[0]), 
+                                       .RST(RST), 
+                                       .sel(Sel), 
+                                       .Y(Y[0]));
+endmodule
+`timescale 1ns / 1ps
+
+module mux2to1_8bits(I0, 
+                     I1, 
+                     RST, 
+                     Sel, 
+                     Y);
+
+    input [7:0] I0;
+    input [7:0] I1;
+    input RST;
+    input Sel;
+   output [7:0] Y;
+   
+   
+   mux2to1_4bits_MUSER_mux2to1_8bits  XLXI_9 (.I0(I0[3:0]), 
+                                             .I1(I1[3:0]), 
+                                             .RST(RST), 
+                                             .Sel(Sel), 
+                                             .Y(Y[3:0]));
+   mux2to1_4bits_MUSER_mux2to1_8bits  XLXI_10 (.I0(I0[7:4]), 
+                                              .I1(I1[7:4]), 
+                                              .RST(RST), 
+                                              .Sel(Sel), 
+                                              .Y(Y[7:4]));
+endmodule

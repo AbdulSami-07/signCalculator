@@ -1,0 +1,528 @@
+////////////////////////////////////////////////////////////////////////////////
+// Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+////////////////////////////////////////////////////////////////////////////////
+//   ____  ____ 
+//  /   /\/   / 
+// /___/  \  /    Vendor: Xilinx 
+// \   \   \/     Version : 14.7
+//  \   \         Application : sch2hdl
+//  /   /         Filename : division_block.vf
+// /___/   /\     Timestamp : 11/24/2021 20:14:26
+// \   \  /  \ 
+//  \___\/\___\ 
+//
+//Command: sch2hdl -intstyle ise -family artix7 -verilog /home/dell-pc/Documents/pinE/signCalculator/division_block.vf -w /home/dell-pc/Documents/pinE/signCalculator/division_block.sch
+//Design Name: division_block
+//Device: artix7
+//Purpose:
+//    This verilog netlist is translated from an ECS schematic.It can be 
+//    synthesized and simulated, but it should not be modified. 
+//
+`timescale 1ns / 1ps
+
+module mux2to1_MUSER_division_block(i0, 
+                                    i1, 
+                                    RST, 
+                                    sel, 
+                                    Y);
+
+    input i0;
+    input i1;
+    input RST;
+    input sel;
+   output Y;
+   
+   wire XLXN_1;
+   wire XLXN_2;
+   wire XLXN_4;
+   wire XLXN_6;
+   wire XLXN_7;
+   
+   AND2  XLXI_1 (.I0(XLXN_1), 
+                .I1(i0), 
+                .O(XLXN_2));
+   AND2  XLXI_2 (.I0(sel), 
+                .I1(i1), 
+                .O(XLXN_4));
+   INV  XLXI_3 (.I(sel), 
+               .O(XLXN_1));
+   OR2  XLXI_4 (.I0(XLXN_4), 
+               .I1(XLXN_2), 
+               .O(XLXN_6));
+   AND2  XLXI_5 (.I0(XLXN_7), 
+                .I1(XLXN_6), 
+                .O(Y));
+   INV  XLXI_7 (.I(RST), 
+               .O(XLXN_7));
+endmodule
+`timescale 1ns / 1ps
+
+module half_adder_MUSER_division_block(a, 
+                                       b, 
+                                       RST, 
+                                       carry, 
+                                       sum);
+
+    input a;
+    input b;
+    input RST;
+   output carry;
+   output sum;
+   
+   wire XLXN_2;
+   wire XLXN_9;
+   wire XLXN_10;
+   
+   AND2  XLXI_1 (.I0(b), 
+                .I1(a), 
+                .O(XLXN_9));
+   XOR2  XLXI_2 (.I0(b), 
+                .I1(a), 
+                .O(XLXN_10));
+   AND2  XLXI_3 (.I0(XLXN_2), 
+                .I1(XLXN_9), 
+                .O(carry));
+   AND2  XLXI_4 (.I0(XLXN_2), 
+                .I1(XLXN_10), 
+                .O(sum));
+   INV  XLXI_5 (.I(RST), 
+               .O(XLXN_2));
+endmodule
+`timescale 1ns / 1ps
+
+module full_adder_MUSER_division_block(a, 
+                                       b, 
+                                       c_in, 
+                                       RST, 
+                                       carry, 
+                                       sum);
+
+    input a;
+    input b;
+    input c_in;
+    input RST;
+   output carry;
+   output sum;
+   
+   wire XLXN_1;
+   wire XLXN_5;
+   wire XLXN_6;
+   
+   OR2  XLXI_3 (.I0(XLXN_6), 
+               .I1(XLXN_5), 
+               .O(carry));
+   half_adder_MUSER_division_block  XLXI_4 (.a(a), 
+                                           .b(b), 
+                                           .RST(RST), 
+                                           .carry(XLXN_5), 
+                                           .sum(XLXN_1));
+   half_adder_MUSER_division_block  XLXI_5 (.a(XLXN_1), 
+                                           .b(c_in), 
+                                           .RST(RST), 
+                                           .carry(XLXN_6), 
+                                           .sum(sum));
+endmodule
+`timescale 1ns / 1ps
+
+module control_adder_subtractor_MUSER_division_block(A, 
+                                                     B, 
+                                                     Carry_in, 
+                                                     Mode, 
+                                                     RST, 
+                                                     Carry_out, 
+                                                     Sum);
+
+    input A;
+    input B;
+    input Carry_in;
+    input Mode;
+    input RST;
+   output Carry_out;
+   output Sum;
+   
+   wire XLXN_2;
+   
+   full_adder_MUSER_division_block  XLXI_1 (.a(A), 
+                                           .b(XLXN_2), 
+                                           .c_in(Carry_in), 
+                                           .RST(RST), 
+                                           .carry(Carry_out), 
+                                           .sum(Sum));
+   XOR2  XLXI_2 (.I0(Mode), 
+                .I1(B), 
+                .O(XLXN_2));
+endmodule
+`timescale 1ns / 1ps
+
+module divider4_MUSER_division_block(b, 
+                                     D, 
+                                     RST, 
+                                     Q, 
+                                     R);
+
+    input [3:0] b;
+    input [3:0] D;
+    input RST;
+   output [3:0] Q;
+   output [3:0] R;
+   
+   wire XLXN_4;
+   wire XLXN_17;
+   wire XLXN_18;
+   wire XLXN_22;
+   wire XLXN_46;
+   wire XLXN_47;
+   wire XLXN_48;
+   wire XLXN_71;
+   wire XLXN_73;
+   wire XLXN_82;
+   wire XLXN_83;
+   wire XLXN_84;
+   wire XLXN_92;
+   wire XLXN_93;
+   wire XLXN_94;
+   wire XLXN_158;
+   wire XLXN_159;
+   wire XLXN_160;
+   wire XLXN_166;
+   wire XLXN_167;
+   wire XLXN_168;
+   wire XLXN_188;
+   wire XLXN_189;
+   wire XLXN_191;
+   wire XLXN_199;
+   wire XLXN_200;
+   wire XLXN_201;
+   wire XLXN_202;
+   wire XLXN_203;
+   wire XLXN_204;
+   wire XLXN_205;
+   wire XLXN_220;
+   wire XLXN_227;
+   wire XLXN_238;
+   wire XLXN_240;
+   wire XLXN_242;
+   wire [3:0] Q_DUMMY;
+   
+   assign Q[3:0] = Q_DUMMY[3:0];
+   control_adder_subtractor_MUSER_division_block  XLXI_3 (.A(D[3]), 
+                                                         .B(b[0]), 
+                                                         .Carry_in(XLXN_4), 
+                                                         .Mode(XLXN_4), 
+                                                         .RST(RST), 
+                                                         .Carry_out(XLXN_22), 
+                                                         .Sum(XLXN_48));
+   control_adder_subtractor_MUSER_division_block  XLXI_4 (.A(XLXN_242), 
+                                                         .B(b[1]), 
+                                                         .Carry_in(XLXN_22), 
+                                                         .Mode(XLXN_4), 
+                                                         .RST(RST), 
+                                                         .Carry_out(XLXN_18), 
+                                                         .Sum(XLXN_47));
+   control_adder_subtractor_MUSER_division_block  XLXI_5 (.A(XLXN_242), 
+                                                         .B(b[2]), 
+                                                         .Carry_in(XLXN_18), 
+                                                         .Mode(XLXN_4), 
+                                                         .RST(RST), 
+                                                         .Carry_out(XLXN_17), 
+                                                         .Sum(XLXN_46));
+   control_adder_subtractor_MUSER_division_block  XLXI_6 (.A(XLXN_242), 
+                                                         .B(b[3]), 
+                                                         .Carry_in(XLXN_17), 
+                                                         .Mode(XLXN_4), 
+                                                         .RST(RST), 
+                                                         
+         .Carry_out(Q_DUMMY[3]), 
+                                                         .Sum());
+   VCC  XLXI_7 (.P(XLXN_4));
+   GND  XLXI_8 (.G(XLXN_242));
+   mux2to1_MUSER_division_block  XLXI_11 (.i0(XLXN_242), 
+                                         .i1(XLXN_46), 
+                                         .RST(RST), 
+                                         .sel(Q_DUMMY[3]), 
+                                         .Y(XLXN_71));
+   mux2to1_MUSER_division_block  XLXI_13 (.i0(D[3]), 
+                                         .i1(XLXN_48), 
+                                         .RST(RST), 
+                                         .sel(Q_DUMMY[3]), 
+                                         .Y(XLXN_73));
+   mux2to1_MUSER_division_block  XLXI_14 (.i0(XLXN_242), 
+                                         .i1(XLXN_47), 
+                                         .RST(RST), 
+                                         .sel(Q_DUMMY[3]), 
+                                         .Y(XLXN_220));
+   control_adder_subtractor_MUSER_division_block  XLXI_15 (.A(XLXN_71), 
+                                                          .B(b[3]), 
+                                                          .Carry_in(XLXN_82), 
+                                                          .Mode(XLXN_4), 
+                                                          .RST(RST), 
+                                                          
+         .Carry_out(Q_DUMMY[2]), 
+                                                          .Sum());
+   control_adder_subtractor_MUSER_division_block  XLXI_16 (.A(XLXN_220), 
+                                                          .B(b[2]), 
+                                                          .Carry_in(XLXN_83), 
+                                                          .Mode(XLXN_4), 
+                                                          .RST(RST), 
+                                                          .Carry_out(XLXN_82), 
+                                                          .Sum(XLXN_92));
+   control_adder_subtractor_MUSER_division_block  XLXI_17 (.A(XLXN_73), 
+                                                          .B(b[1]), 
+                                                          .Carry_in(XLXN_84), 
+                                                          .Mode(XLXN_4), 
+                                                          .RST(RST), 
+                                                          .Carry_out(XLXN_83), 
+                                                          .Sum(XLXN_93));
+   control_adder_subtractor_MUSER_division_block  XLXI_19 (.A(D[2]), 
+                                                          .B(b[0]), 
+                                                          .Carry_in(XLXN_4), 
+                                                          .Mode(XLXN_4), 
+                                                          .RST(RST), 
+                                                          .Carry_out(XLXN_84), 
+                                                          .Sum(XLXN_94));
+   mux2to1_MUSER_division_block  XLXI_20 (.i0(XLXN_220), 
+                                         .i1(XLXN_92), 
+                                         .RST(RST), 
+                                         .sel(Q_DUMMY[2]), 
+                                         .Y(XLXN_227));
+   mux2to1_MUSER_division_block  XLXI_21 (.i0(D[3]), 
+                                         .i1(XLXN_93), 
+                                         .RST(RST), 
+                                         .sel(Q_DUMMY[2]), 
+                                         .Y(XLXN_238));
+   mux2to1_MUSER_division_block  XLXI_22 (.i0(D[2]), 
+                                         .i1(XLXN_94), 
+                                         .RST(RST), 
+                                         .sel(Q_DUMMY[2]), 
+                                         .Y(XLXN_240));
+   control_adder_subtractor_MUSER_division_block  XLXI_41 (.A(XLXN_227), 
+                                                          .B(b[3]), 
+                                                          .Carry_in(XLXN_158), 
+                                                          .Mode(XLXN_4), 
+                                                          .RST(RST), 
+                                                          
+         .Carry_out(Q_DUMMY[1]), 
+                                                          .Sum());
+   control_adder_subtractor_MUSER_division_block  XLXI_42 (.A(XLXN_238), 
+                                                          .B(b[2]), 
+                                                          .Carry_in(XLXN_159), 
+                                                          .Mode(XLXN_4), 
+                                                          .RST(RST), 
+                                                          .Carry_out(XLXN_158), 
+                                                          .Sum(XLXN_166));
+   control_adder_subtractor_MUSER_division_block  XLXI_43 (.A(XLXN_240), 
+                                                          .B(b[1]), 
+                                                          .Carry_in(XLXN_160), 
+                                                          .Mode(XLXN_4), 
+                                                          .RST(RST), 
+                                                          .Carry_out(XLXN_159), 
+                                                          .Sum(XLXN_167));
+   control_adder_subtractor_MUSER_division_block  XLXI_44 (.A(D[1]), 
+                                                          .B(b[0]), 
+                                                          .Carry_in(XLXN_4), 
+                                                          .Mode(XLXN_4), 
+                                                          .RST(RST), 
+                                                          .Carry_out(XLXN_160), 
+                                                          .Sum(XLXN_168));
+   mux2to1_MUSER_division_block  XLXI_45 (.i0(XLXN_238), 
+                                         .i1(XLXN_166), 
+                                         .RST(RST), 
+                                         .sel(Q_DUMMY[1]), 
+                                         .Y(XLXN_203));
+   mux2to1_MUSER_division_block  XLXI_46 (.i0(XLXN_240), 
+                                         .i1(XLXN_167), 
+                                         .RST(RST), 
+                                         .sel(Q_DUMMY[1]), 
+                                         .Y(XLXN_204));
+   mux2to1_MUSER_division_block  XLXI_47 (.i0(D[1]), 
+                                         .i1(XLXN_168), 
+                                         .RST(RST), 
+                                         .sel(Q_DUMMY[1]), 
+                                         .Y(XLXN_205));
+   control_adder_subtractor_MUSER_division_block  XLXI_49 (.A(XLXN_204), 
+                                                          .B(b[2]), 
+                                                          .Carry_in(XLXN_189), 
+                                                          .Mode(XLXN_4), 
+                                                          .RST(RST), 
+                                                          .Carry_out(XLXN_191), 
+                                                          .Sum(XLXN_200));
+   control_adder_subtractor_MUSER_division_block  XLXI_51 (.A(XLXN_203), 
+                                                          .B(b[3]), 
+                                                          .Carry_in(XLXN_191), 
+                                                          .Mode(XLXN_4), 
+                                                          .RST(RST), 
+                                                          
+         .Carry_out(Q_DUMMY[0]), 
+                                                          .Sum(XLXN_199));
+   control_adder_subtractor_MUSER_division_block  XLXI_52 (.A(XLXN_205), 
+                                                          .B(b[1]), 
+                                                          .Carry_in(XLXN_188), 
+                                                          .Mode(XLXN_4), 
+                                                          .RST(RST), 
+                                                          .Carry_out(XLXN_189), 
+                                                          .Sum(XLXN_201));
+   control_adder_subtractor_MUSER_division_block  XLXI_53 (.A(D[0]), 
+                                                          .B(b[0]), 
+                                                          .Carry_in(XLXN_4), 
+                                                          .Mode(XLXN_4), 
+                                                          .RST(RST), 
+                                                          .Carry_out(XLXN_188), 
+                                                          .Sum(XLXN_202));
+   mux2to1_MUSER_division_block  XLXI_54 (.i0(XLXN_203), 
+                                         .i1(XLXN_199), 
+                                         .RST(RST), 
+                                         .sel(Q_DUMMY[0]), 
+                                         .Y(R[3]));
+   mux2to1_MUSER_division_block  XLXI_55 (.i0(XLXN_204), 
+                                         .i1(XLXN_200), 
+                                         .RST(RST), 
+                                         .sel(Q_DUMMY[0]), 
+                                         .Y(R[2]));
+   mux2to1_MUSER_division_block  XLXI_56 (.i0(XLXN_205), 
+                                         .i1(XLXN_201), 
+                                         .RST(RST), 
+                                         .sel(Q_DUMMY[0]), 
+                                         .Y(R[1]));
+   mux2to1_MUSER_division_block  XLXI_57 (.i0(D[0]), 
+                                         .i1(XLXN_202), 
+                                         .RST(RST), 
+                                         .sel(Q_DUMMY[0]), 
+                                         .Y(R[0]));
+endmodule
+`timescale 1ns / 1ps
+
+module compliment_2s4_MUSER_division_block(A, 
+                                           RST, 
+                                           Y);
+
+    input [3:0] A;
+    input RST;
+   output [3:0] Y;
+   
+   wire XLXN_2;
+   wire XLXN_3;
+   wire XLXN_4;
+   wire XLXN_7;
+   wire XLXN_8;
+   wire XLXN_41;
+   wire XLXN_51;
+   wire XLXN_105;
+   
+   INV  XLXI_5 (.I(A[3]), 
+               .O(XLXN_41));
+   INV  XLXI_6 (.I(A[2]), 
+               .O(XLXN_4));
+   INV  XLXI_7 (.I(A[1]), 
+               .O(XLXN_3));
+   INV  XLXI_8 (.I(A[0]), 
+               .O(XLXN_2));
+   half_adder_MUSER_division_block  XLXI_12 (.a(XLXN_4), 
+                                            .b(XLXN_7), 
+                                            .RST(RST), 
+                                            .carry(XLXN_105), 
+                                            .sum(Y[2]));
+   half_adder_MUSER_division_block  XLXI_13 (.a(XLXN_8), 
+                                            .b(XLXN_3), 
+                                            .RST(RST), 
+                                            .carry(XLXN_7), 
+                                            .sum(Y[1]));
+   half_adder_MUSER_division_block  XLXI_14 (.a(XLXN_51), 
+                                            .b(XLXN_2), 
+                                            .RST(RST), 
+                                            .carry(XLXN_8), 
+                                            .sum(Y[0]));
+   half_adder_MUSER_division_block  XLXI_18 (.a(XLXN_41), 
+                                            .b(XLXN_105), 
+                                            .RST(RST), 
+                                            .carry(), 
+                                            .sum(Y[3]));
+   VCC  XLXI_24 (.P(XLXN_51));
+endmodule
+`timescale 1ns / 1ps
+
+module mux2to1_4bits_MUSER_division_block(I0, 
+                                          I1, 
+                                          RST, 
+                                          Sel, 
+                                          Y);
+
+    input [3:0] I0;
+    input [3:0] I1;
+    input RST;
+    input Sel;
+   output [3:0] Y;
+   
+   
+   mux2to1_MUSER_division_block  XLXI_5 (.i0(I0[3]), 
+                                        .i1(I1[3]), 
+                                        .RST(RST), 
+                                        .sel(Sel), 
+                                        .Y(Y[3]));
+   mux2to1_MUSER_division_block  XLXI_6 (.i0(I0[2]), 
+                                        .i1(I1[2]), 
+                                        .RST(RST), 
+                                        .sel(Sel), 
+                                        .Y(Y[2]));
+   mux2to1_MUSER_division_block  XLXI_7 (.i0(I0[1]), 
+                                        .i1(I1[1]), 
+                                        .RST(RST), 
+                                        .sel(Sel), 
+                                        .Y(Y[1]));
+   mux2to1_MUSER_division_block  XLXI_8 (.i0(I0[0]), 
+                                        .i1(I1[0]), 
+                                        .RST(RST), 
+                                        .sel(Sel), 
+                                        .Y(Y[0]));
+endmodule
+`timescale 1ns / 1ps
+
+module division_block(A, 
+                      B, 
+                      RST, 
+                      S0, 
+                      S1, 
+                      Q, 
+                      R, 
+                      Sign);
+
+    input [3:0] A;
+    input [3:0] B;
+    input RST;
+    input S0;
+    input S1;
+   output [3:0] Q;
+   output [3:0] R;
+   output Sign;
+   
+   wire XLXN_40;
+   wire XLXN_41;
+   wire XLXN_48;
+   wire [3:0] XLXN_106;
+   wire [3:0] XLXN_107;
+   wire Sign_DUMMY;
+   
+   assign Sign = Sign_DUMMY;
+   mux2to1_MUSER_division_block  XLXI_2 (.i0(XLXN_40), 
+                                        .i1(XLXN_41), 
+                                        .RST(RST), 
+                                        .sel(XLXN_48), 
+                                        .Y(Sign_DUMMY));
+   VCC  XLXI_4 (.P(XLXN_41));
+   GND  XLXI_5 (.G(XLXN_40));
+   XOR2  XLXI_6 (.I0(S1), 
+                .I1(S0), 
+                .O(XLXN_48));
+   divider4_MUSER_division_block  XLXI_31 (.b(B[3:0]), 
+                                          .D(A[3:0]), 
+                                          .RST(RST), 
+                                          .Q(XLXN_106[3:0]), 
+                                          .R(R[3:0]));
+   mux2to1_4bits_MUSER_division_block  XLXI_51 (.I0(XLXN_106[3:0]), 
+                                               .I1(XLXN_107[3:0]), 
+                                               .RST(RST), 
+                                               .Sel(Sign_DUMMY), 
+                                               .Y(Q[3:0]));
+   compliment_2s4_MUSER_division_block  XLXI_52 (.A(XLXN_106[3:0]), 
+                                                .RST(RST), 
+                                                .Y(XLXN_107[3:0]));
+endmodule
